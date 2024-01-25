@@ -1,4 +1,5 @@
-import AnnounceCard from "./(components)/announceCard"
+'use client'
+import AnnounceCard from "./(compont)/AnnounceCard"
 
 const Student = () => {
     return (
