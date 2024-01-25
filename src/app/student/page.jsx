@@ -2,10 +2,15 @@
 import { useState } from "react"
 import AnnounceCard from "./AnnounceCard"
 import FilterType from "./FilterType"
+import Paginate from "./Paginate"
 
 const Student = () => {
 
-    const [type,setType] = useState(null)
+    const [type, setType] = useState(null)
+
+    //paginate
+    const [datacount, setDatacount] = useState(2)
+    const [page, setPage] = useState(1);
 
     return (
         <div className="px-40 py-6">
@@ -18,8 +23,9 @@ const Student = () => {
                     <div>หัวข้อ</div>
                     <div>วันที่ประกาศ</div>
                 </div>
-                <AnnounceCard />
+                <AnnounceCard setDatacount={setDatacount} page={page}/>
             </div>
+            <Paginate datacount={Math.ceil(datacount/10)} page={page} setPage={setPage}/>
         </div>
     )
 }
