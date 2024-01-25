@@ -1,3 +1,5 @@
+import AnnounceCard from "./(components)/announceCard"
+
 const Student = () => {
     return (
         <div className="px-40 py-6">
@@ -6,18 +8,11 @@ const Student = () => {
             </div>
             <div className=" shadow-md rounded-xl">
                 <div className=" bg-[#FF6E2F] rounded-t-xl py-[0.6rem] px-5 font-bold text-white">ทั้งหมด</div>
-                <div className="flex justify-between  bg-[#F5F5F5] py-[0.6rem] px-5 font-bold text-[#595959]">
+                <div className="flex justify-between bg-[#F5F5F5] py-[0.6rem] px-5 font-bold text-[#595959]">
                     <div>หัวข้อ</div>
                     <div>วันที่ประกาศ</div>
                 </div>
-                <div className="flex justify-between  bg-[#FFFFFF] py-[0.6rem] px-5 text-[#595959]">
-                    <div>หัวข้อ</div>
-                    <div>16/01/2024</div>
-                </div>
-                <div className="flex justify-between  bg-[#F5F5F5] py-[0.6rem] px-5 text-[#595959]">
-                    <div>หัวข้อ</div>
-                    <div>16/01/2024</div>
-                </div>
+                <AnnounceCard />
             </div>
         </div>
     )
