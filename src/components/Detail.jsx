@@ -1,17 +1,20 @@
-const Announcement = () => {
-    return (
+import { MdArrowBackIos } from "react-icons/md";
+
+const Detail = (props) =>{
+    return(
         <div className=" p-7">
-            <div className="text-KMITL">
-                Back
+            <div className="text-KMITL flex">
+            <MdArrowBackIos className="self-center font-bold" />
+            Back
             </div>
-            <div>หัวข้อ</div>
+            <div>{props.head}</div>
             <div className=" flex gap-20">
-                <div>Nutchapon Tripat</div>
-                <div>17/1/2024 1:00:01 AM</div>
+                <div>{props.name}</div>
+                <div>{props.date}</div>
             </div>
             <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente accusamus ipsam nobis dolorem quaerat sunt maiores enim. Cupiditate placeat, tenetur distinctio, id odio sint dolore vitae laudantium, esse nam sunt.</div>
         </div>
     )
 }
 
-export default Announcement
+export default Detail
