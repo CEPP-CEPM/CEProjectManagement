@@ -1,0 +1,7 @@
+.createPost_postForm_typeButton {
+    @apply border-[1px] border-[#FF6E2F] px-[20px] py-[8px] text-[12px];
+}
+
+.createPost_postForm_topicInput {
+    @apply h-[30px] w-[100%] rounded-[6px] border-[1px] border-[#BDBEC2] px-[5px] text-[14px] focus:outline-none;
+}
