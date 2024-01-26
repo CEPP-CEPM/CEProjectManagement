@@ -4,6 +4,10 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import './styles.css'
 
+// icon
+import { IoIosAddCircle } from 'react-icons/io';
+import { RxCross2 } from 'react-icons/rx';
+
 const CreatePost = () => {
 
     const [open, setOpen] = useState(false);
@@ -12,6 +16,19 @@ const CreatePost = () => {
 
     const [type, setType] = useState(true);
     const [topic, setTopic] = useState('');
+    const [tags, setTags] = useState([]);
+    const [dueDate, setDueDate] = useState('');
+
+    const [options, setOptions] = useState([{id:'1',name:'sw'},{id:'2',name:'nw'},{id:'3',name:'dwaadwada'}]);
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let currentDate = `${year}-${month}-${day}`;
 
     const selectType = (select) => {
         if (select == 1 && !type) {
@@ -19,6 +36,19 @@ const CreatePost = () => {
         } else if (select == 0 && type) {
             setType(false);
         }
+    };
+    
+    const selectTag = (newtag) => {
+        setTags([...tags, newtag]);
+        options.splice(options.indexOf(newtag), 1);
+        setOptions(options);
+        setShowDropdown(false);
+    };
+    
+    const deleteTag = (tag) => {
+        setOptions([...options, tag]);
+        tags.splice(tags.indexOf(tag), 1);
+        setTags(tags);
     };
 
     return (
@@ -67,7 +97,7 @@ const CreatePost = () => {
                         </div>
 
                         {/* Topic */}
-                        <div className=' mb-[15px] '>
+                        <div className=' mb-[10px] '>
                             <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>หัวข้อ</h2>
                             <input
                             type='topic'
@@ -76,6 +106,73 @@ const CreatePost = () => {
                             onChange={(e) => setTopic(e.target.value)}
                             value={topic}
                             />
+                        </div>
+
+                        {/* Tag & Due date */}
+                        <div
+                            className={`md:flex mb-[10px] items-end`}
+                        >
+                            {!type ? (
+                            <div className='md:flex-col'>
+                                <h2 className='text-[15px] font-bold text-[#545F71] mb-[5px]'>กำหนดส่ง</h2>
+                                <input
+                                    type='date'
+                                    name='dueDate'
+                                    min={`${currentDate}`}
+                                    className='mb-[15px] rounded-[6px] border-[1px] border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2] md:mb-[-4px]'
+                                    onChange={(e) => setDueDate(e.target.value)}
+                                />
+                            </div>
+                            ) : (
+                            <div className=''>
+                                <div className=' text-[15px] font-bold text-[#545F71] mb-[5px]'>หมวดหมู่</div>
+                                <div className='flex md:mb-[-8px] md:flex md:flex-row md:px-[0] '>
+                                    {tags.map((tag) => {
+                                        return (
+                                            <div
+                                            key={tag.id}
+                                            className='mr-[5px] flex flex-row items-center rounded-[6px] border-[1px] border-[#BDBEC2] bg-[#BDBEC2] px-[5px] py-[6px] text-[12px] text-[#fff]'
+                                            >
+                                                <div>{tag.name}</div>
+                                                <button className='ml-[2px]' onClick={() => deleteTag(tag)}>
+                                                    <RxCross2 />
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                    <div
+                                    className='flex-col'
+                                    onClick={() => setShowDropdown(!showDropdown)}
+                                    onBlur={() => setShowDropdown(false)}
+                                    >
+                                        {options.length != 0 ? (
+                                            <button className='createPost_postForm_tag hover:bg-[#898a8d] focus:bg-[#898a8d]'>
+                                                <IoIosAddCircle />
+                                            </button>
+                                        ) : null}
+                                        <ul
+                                            className={`dropdown-content  ${
+                                            showDropdown ? 'flex-col ' : 'hidden'
+                                            }`}
+                                        >
+                                            {showDropdown
+                                            ? options.map((tag) => {
+                                                return (
+                                                    <li
+                                                    key={tag.id}
+                                                    className='align-self-center z-[1] flex w-[100%] px-3 py-3 hover:bg-[#898a8d]'
+                                                    onMouseDown={() => selectTag(tag)}
+                                                    >
+                                                    {tag.name}
+                                                    </li>
+                                                );
+                                                })
+                                            : null}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            )}
                         </div>
                     </div>
                 </Fade>

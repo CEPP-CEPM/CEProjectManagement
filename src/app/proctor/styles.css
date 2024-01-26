@@ -3,5 +3,13 @@
 }
 
 .createPost_postForm_topicInput {
-    @apply h-[30px] w-[100%] rounded-[6px] border-[1px] border-[#BDBEC2] px-[5px] text-[14px] focus:outline-none;
+    @apply h-[40px] w-[100%] rounded-[6px] border-[1px] border-[#BDBEC2] px-[5px] text-[14px] focus:outline-none;
+}
+
+.createPost_postForm_tag {
+    @apply flex w-full flex-row items-center rounded-[6px] bg-[#BDBEC2] text-[12px] text-[#FFFFFF] hover:bg-[#898a8d] focus:bg-[#898a8d]  md:px-[10px] md:py-[10px];
+}
+
+.dropdown-content {
+    @apply absolute w-auto z-[2] overflow-auto rounded-[5px] bg-[#BDBEC2] text-[12px] text-[#FFFFFF];
 }
