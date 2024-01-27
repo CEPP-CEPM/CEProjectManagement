@@ -18,6 +18,7 @@ const CreatePost = () => {
     const [topic, setTopic] = useState('');
     const [tags, setTags] = useState([]);
     const [dueDate, setDueDate] = useState('');
+    const [detail, setDetail] = useState(' ');
 
     const [options, setOptions] = useState([{id:'1',name:'sw'},{id:'2',name:'nw'},{id:'3',name:'dwaadwada'}]);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -51,8 +52,12 @@ const CreatePost = () => {
         setTags(tags);
     };
 
+    const handleSubmit = () => {
+        handleClose()
+    }
+
     return (
-        <div>
+        <div className=''>
             <button className="border-[#BDBEC2] border-[1px] py-2 text-[#BDBEC2] rounded-md w-[45px] hover:bg-[#BDBEC2] hover:text-white mr-3"
                     onClick={handleOpen}>+</button>
             <Modal
@@ -97,7 +102,7 @@ const CreatePost = () => {
                         </div>
 
                         {/* Topic */}
-                        <div className=' mb-[10px] '>
+                        <div className='mb-[10px]'>
                             <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>หัวข้อ</h2>
                             <input
                             type='topic'
@@ -110,23 +115,25 @@ const CreatePost = () => {
 
                         {/* Tag & Due date */}
                         <div
-                            className={`md:flex mb-[10px] items-end`}
+                            className={`md:flex items-end`}
                         >
                             {!type ? (
-                            <div className='md:flex-col'>
+                            // Due-Date
+                            <div className='md:flex-col mb-[5px]'>
                                 <h2 className='text-[15px] font-bold text-[#545F71] mb-[5px]'>กำหนดส่ง</h2>
                                 <input
                                     type='date'
                                     name='dueDate'
                                     min={`${currentDate}`}
-                                    className='mb-[15px] rounded-[6px] border-[1px] border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2] md:mb-[-4px]'
+                                    className='rounded-[6px] border-[1px] border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2] '
                                     onChange={(e) => setDueDate(e.target.value)}
                                 />
                             </div>
                             ) : (
-                            <div className=''>
+                            // Tag
+                            <div className='mb-[3px]'>
                                 <div className=' text-[15px] font-bold text-[#545F71] mb-[5px]'>หมวดหมู่</div>
-                                <div className='flex md:mb-[-8px] md:flex md:flex-row md:px-[0] '>
+                                <div className='flex md:flex md:flex-row md:px-[0] '>
                                     {tags.map((tag) => {
                                         return (
                                             <div
@@ -173,6 +180,20 @@ const CreatePost = () => {
                                 </div>
                             </div>
                             )}
+                        </div>
+
+                        {/* detail */}
+                        <div className='mb-[10px]'>
+                            <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>รายละเอียด</h2>
+                            <textarea name="" id="" cols="" rows="7" spellCheck='true' className=' w-full resize-none border-[1px] border-[#BDBEC2] rounded-[6px] px-2 py-2 outline-none'
+                                    onChange={(e) => setDetail(e.target.value)}></textarea>
+                        </div>
+
+                        {/* send file */}
+
+                        {/* submit */}
+                        <div className='flex justify-end'>
+                            <button className=' bg-[#FF6E2F] mr-2 px-5 py-2 text-[15px] text-white rounded-md hover:bg-[#ee672d]' onClick={() => handleSubmit()}>Submit</button>
                         </div>
                     </div>
                 </Fade>
