@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // icon
-import { MdOutlineAssignment } from "react-icons/md";
+import { RiGroupLine } from "react-icons/ri";
 
 const GroupLists = () => {
 
@@ -13,11 +13,15 @@ const GroupLists = () => {
             {students.map((data) => {
                 return (
                     <div key={data.id}>
-                        <div className="px-1 py-4">
-                            <button className="flex items-center w-full">
-                                <MdOutlineAssignment className=" text-[#BDBEC2] w-14 h-14 px-1 text-[25px] border-[3px] rounded-full mx-3"/>
+                        <div className="flex justify-between items-center px-1 py-4">
+                            <div className="flex items-center w-full">
+                                <RiGroupLine className=" text-[#BDBEC2] w-14 h-14 px-3 text-[25px] border-[3px] rounded-full mx-3"/>
                                 <div className="text-[18px]">{data.group}</div>
-                            </button>
+                            </div>
+                            <div className="flex pr-4">
+                                <button className="mr-4 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800">Reject</button>
+                                <button className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-800">Accept</button>
+                            </div>
                         </div>
                         <hr/>
                     </div>
