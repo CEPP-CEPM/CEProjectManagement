@@ -72,7 +72,7 @@ const CreatePost = () => {
                     },
                 }}>
                 <Fade in={open}>
-                    <div className='bg-white left-[25%] top-[5%] absolute w-[50%] h-[90%] rounded-md px-[2.5%] py-[2.5%]'>
+                    <div className='bg-white left-[12.5%] md:left-[25%] top-[5%] absolute w-[75%] md:w-[50%] h-[90%] rounded-md px-[2.5%] py-[2.5%]'>
                         {/* type */}
                         <div className='flex mb-[15px]'>
                             <button

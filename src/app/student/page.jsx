@@ -13,7 +13,7 @@ const Student = () => {
     const [page, setPage] = useState(1);
 
     return (
-        <div className="px-40 py-6">
+        <div className="px-7 md:px-40 py-6">
             <div className="flex justify-end mb-6 mt-1">
                 <FilterType setType={setType}/>
             </div>

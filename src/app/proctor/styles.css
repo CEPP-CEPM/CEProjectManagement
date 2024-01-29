@@ -1,5 +1,5 @@
 .createPost_postForm_typeButton {
-    @apply border-[1px] border-[#FF6E2F] px-[20px] py-[8px] text-[12px];
+    @apply border-[1px] border-[#FF6E2F] px-3 py-2 text-[12px] md:px-[20px] md:py-[8px] md:text-[12px];
 }
 
 .createPost_postForm_topicInput {
