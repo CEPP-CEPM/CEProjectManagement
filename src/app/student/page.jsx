@@ -13,7 +13,7 @@ const Student = () => {
     const [page, setPage] = useState(1);
 
     return (
-        <div className="px-7 md:px-40 py-6">
+        <div className="px-10 md:px-40 py-6">
             <div className="flex justify-end mb-6 mt-1">
                 <FilterType setType={setType}/>
             </div>
@@ -21,7 +21,7 @@ const Student = () => {
                 <div className=" bg-[#FF6E2F] rounded-t-xl py-[0.6rem] px-5 font-bold text-white">{type ? type : 'ทั้งหมด'}</div>
                 <div className="flex justify-between bg-[#F5F5F5] py-[0.6rem] px-5 font-bold text-[#595959]">
                     <div>หัวข้อ</div>
-                    <div>วันที่ประกาศ</div>
+                    <div className="hidden md:block">วันที่ประกาศ</div>
                 </div>
                 <AnnounceCard setDatacount={setDatacount} page={page}/>
             </div>

@@ -24,7 +24,7 @@ const AnnounceCard = (props) => {
                 return (
                     <div key={data.id} className={`flex justify-between bg-[${data.id%2 ? '#FFFFFF' : '#F5F5F5'}] py-[0.6rem] px-5 text-[#595959]`}>
                         <div>{data.name}</div>
-                        <div>16/01/2024</div>
+                        <div className="hidden md:block">16/01/2024</div>
                     </div>
                 )
             })}
