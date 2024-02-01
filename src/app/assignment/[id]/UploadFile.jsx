@@ -1,30 +1,38 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useRef } from "react";
 
 const UploadFile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+  const hiddenFileInput = useRef(null);
+
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
   };
 
-  const handleUpload = () => {
-    // You can perform further actions with the selected file, such as uploading it to a server.
-    if (selectedFile) {
-      console.log('Uploading file:', selectedFile);
-      // Perform additional actions, such as sending the file to a server.
-    } else {
-      console.log('No file selectedss');
-    }
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    handleFile(fileUploaded);
+  };
+
+  const handleFile = (file) => {
+    console.log(file);
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Add File</button>
+    <div className="px-10">
+      <button className="button-upload" onClick={handleClick}>
+        + Add file
+      </button>
+      <input
+        type="file"
+        multiple
+        onChange={handleChange}
+        ref={hiddenFileInput}
+        style={{ display: "none" }}
+      />
     </div>
   );
 };
 
-export default UploadFile
+export default UploadFile;
