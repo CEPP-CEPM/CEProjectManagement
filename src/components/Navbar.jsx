@@ -84,7 +84,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <ul className="menu menu-horizontal px-1 flex-nowrap hidden lg:flex text-black">
+        <ul className="menu menu-horizontal px-1 flex-nowrap hidden lg:flex text-white">
           <li>
             <a>Announcement</a>
           </li>
