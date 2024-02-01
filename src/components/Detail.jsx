@@ -7,7 +7,10 @@ const Detail = (props) =>{
             <MdArrowBackIos className="self-center font-bold" />
             Back
             </div>
+            <div className="flex justify-between items-center">
             <div>{props.head}</div>
+            <div className="bg-KMITL text-white p-5 rounded-[10px]">Announcement</div>
+            </div>
             <div className=" flex gap-20">
                 <div>{props.name}</div>
                 <div>{props.date}</div>
