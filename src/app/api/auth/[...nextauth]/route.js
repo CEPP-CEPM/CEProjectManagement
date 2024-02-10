@@ -10,11 +10,25 @@ export const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account }) {
+      const credential = account.id_token
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        token.accessToken = account.access_token
+        const resLogin = await fetch(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/auth/login`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              credential: credential,
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        resLogin = resLogin.json()
+        console.log(resLogin)
       }
-      return token
+      // return token
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
