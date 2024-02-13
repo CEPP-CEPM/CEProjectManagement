@@ -10,9 +10,9 @@ export const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account }) {
-      const credential = account.id_token
       // Persist the OAuth access_token to the token right after signin
       if (account) {
+        const credential = account.id_token
         const resLogin = await fetch(
           `${process.env.NEXT_PUBLIC_ENDPOINT}/auth/login`,
           {
@@ -25,7 +25,7 @@ export const handler = NextAuth({
             },
           }
         );
-        console.log(resLogin.json())
+        // console.log(await resLogin.json())
       }
       return token
     },
