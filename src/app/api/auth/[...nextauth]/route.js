@@ -25,10 +25,9 @@ export const handler = NextAuth({
             },
           }
         );
-        resLogin = resLogin.json()
-        console.log(resLogin)
+        console.log(resLogin.json())
       }
-      // return token
+      return token
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
