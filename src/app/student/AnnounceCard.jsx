@@ -11,10 +11,16 @@ const AnnounceCard = (props) => {
                 .then((res) => res.data)
             const assignment = await axios.get('http://localhost:3001/assignment')
                 .then((res) => res.data)
+            if (props.type == 'Assignment') {
+                setAnnounceData([...assignment])
+            } else if (props.type == 'Announcement') {
+                setAnnounceData([...announce])
+            } else {
                 setAnnounceData([...announce, ...assignment])
+            }
         }
         fetchPost()
-    },[])
+    },[props.type])
     
     const display = announceData.slice(10*(props.page-1), 10*props.page)
     // console.log(display);
