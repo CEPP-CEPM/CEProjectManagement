@@ -2,11 +2,8 @@
 import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import axios from 'axios'
 import './styles.css'
-
-// icon
-import { IoIosAddCircle } from 'react-icons/io';
-import { RxCross2 } from 'react-icons/rx';
 
 const CreatePost = () => {
 
@@ -16,12 +13,8 @@ const CreatePost = () => {
 
     const [type, setType] = useState(true);
     const [topic, setTopic] = useState('');
-    const [tags, setTags] = useState([]);
     const [dueDate, setDueDate] = useState('');
     const [detail, setDetail] = useState(' ');
-
-    const [options, setOptions] = useState([{id:'1',name:'sw'},{id:'2',name:'nw'},{id:'3',name:'dwaadwada'}]);
-    const [showDropdown, setShowDropdown] = useState(false);
 
     const date = new Date();
 
@@ -38,21 +31,30 @@ const CreatePost = () => {
             setType(false);
         }
     };
-    
-    const selectTag = (newtag) => {
-        setTags([...tags, newtag]);
-        options.splice(options.indexOf(newtag), 1);
-        setOptions(options);
-        setShowDropdown(false);
-    };
-    
-    const deleteTag = (tag) => {
-        setOptions([...options, tag]);
-        tags.splice(tags.indexOf(tag), 1);
-        setTags(tags);
-    };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        if (type == 1) {
+            // Announcement
+            await axios({
+                method: 'post',
+                url: 'http://localhost:3001/announcement',
+                data: {
+                    title: topic,
+                    description: detail
+                }
+            })
+        } else if (type == 0) {
+            // Assignment
+            await axios({
+                method: 'post',
+                url: 'http://localhost:3001/assignment',
+                data: {
+                    title: topic,
+                    description: detail,
+                    dueAt: dueDate
+                }
+            })
+        }
         handleClose()
     }
 
@@ -113,7 +115,7 @@ const CreatePost = () => {
                             />
                         </div>
 
-                        {/* Tag & Due date */}
+                        {/* Due date */}
                         <div
                             className={`md:flex items-end`}
                         >
@@ -126,59 +128,15 @@ const CreatePost = () => {
                                     name='dueDate'
                                     min={`${currentDate}`}
                                     className='rounded-[6px] border-[1px] border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2] '
-                                    onChange={(e) => setDueDate(e.target.value)}
+                                    onChange={(e) => {
+                                        let dueAt = new Date(e.target.value)
+                                        dueAt.setDate(dueAt.getDate() + 1)
+                                        setDueDate(dueAt)
+                                    }}
                                 />
                             </div>
                             ) : (
-                            // Tag
-                            <div className='mb-[3px]'>
-                                <div className=' text-[15px] font-bold text-[#545F71] mb-[5px]'>หมวดหมู่</div>
-                                <div className='flex md:flex md:flex-row md:px-[0] '>
-                                    {tags.map((tag) => {
-                                        return (
-                                            <div
-                                            key={tag.id}
-                                            className='mr-[5px] flex flex-row items-center rounded-[6px] border-[1px] border-[#BDBEC2] bg-[#BDBEC2] px-[5px] py-[6px] text-[12px] text-[#fff]'
-                                            >
-                                                <div>{tag.name}</div>
-                                                <button className='ml-[2px]' onClick={() => deleteTag(tag)}>
-                                                    <RxCross2 />
-                                                </button>
-                                            </div>
-                                        );
-                                    })}
-                                    <div
-                                    className='flex-col'
-                                    onClick={() => setShowDropdown(!showDropdown)}
-                                    onBlur={() => setShowDropdown(false)}
-                                    >
-                                        {options.length != 0 ? (
-                                            <button className='createPost_postForm_tag hover:bg-[#898a8d] focus:bg-[#898a8d]'>
-                                                <IoIosAddCircle />
-                                            </button>
-                                        ) : null}
-                                        <ul
-                                            className={`dropdown-content  ${
-                                            showDropdown ? 'flex-col ' : 'hidden'
-                                            }`}
-                                        >
-                                            {showDropdown
-                                            ? options.map((tag) => {
-                                                return (
-                                                    <li
-                                                    key={tag.id}
-                                                    className='align-self-center z-[1] flex w-[100%] px-3 py-3 hover:bg-[#898a8d]'
-                                                    onMouseDown={() => selectTag(tag)}
-                                                    >
-                                                    {tag.name}
-                                                    </li>
-                                                );
-                                                })
-                                            : null}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            null
                             )}
                         </div>
 
