@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 
 const UploadFile = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [file, setFile] = useState([]);
 
   const hiddenFileInput = useRef(null);
 
@@ -11,12 +11,13 @@ const UploadFile = () => {
   };
 
   const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    handleFile(fileUploaded);
+    const fileUploaded = event.target.files;
+    setFile(Array.from(fileUploaded));
+    handleFile(Array.from(fileUploaded))
   };
 
   const handleFile = (file) => {
-    console.log(file);
+    file.map((f) => console.log(f));
   };
 
   return (
@@ -31,6 +32,9 @@ const UploadFile = () => {
         ref={hiddenFileInput}
         style={{ display: "none" }}
       />
+      {file.map((f) => {
+        return <div className="">{f.name}</div>;
+      })}
     </div>
   );
 };

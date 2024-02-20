@@ -7,6 +7,20 @@ const BtnAddGroup = ({ addGroup }) => {
   const { register, handleSubmit } = useForm();
   const [data, setData] = useState("");
 
+  const addGroup = (data) =>{
+    try {
+      axios.post(
+        `${process.env.NEXT_PUBLIC_ENDPOINT}`.concat('/creategroup'),
+        {
+          topic: data.topic,
+          member: data.member
+        }
+      )
+    } catch (error) {
+      
+    }
+  }
+
   const addMember = async (e) => {
     let arrMember = [];
     for (let i = 0; i < e.target.value; i++) {
