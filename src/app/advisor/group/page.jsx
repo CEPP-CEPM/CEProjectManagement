@@ -1,6 +1,8 @@
-import BtnAddGroup from "./btnAddGroup"
+import BtnAddGroup from "./BtnAddGroup"
 
 const Group = () =>{
+
+
     return(
         <div className="flex flex-col items-center">
             <div>
