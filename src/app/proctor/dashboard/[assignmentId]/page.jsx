@@ -1,6 +1,7 @@
 'use client'
 import GroupLists from "./GroupLists";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 //icon
 import { IoIosArrowBack } from "react-icons/io";
@@ -8,6 +9,10 @@ import { IoIosArrowBack } from "react-icons/io";
 const page = ({params}) => {
 
     const router = useRouter()
+
+    useEffect(() => {
+        
+    }, [])
 
     return (
         <div className="px-7 md:px-24 lg:px-40 py-6">

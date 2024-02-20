@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import UploadFile from '@/components/UploadFile';
 import axios from 'axios'
 import './styles.css'
 
@@ -15,6 +16,7 @@ const CreatePost = () => {
     const [topic, setTopic] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [detail, setDetail] = useState(' ');
+    const [files, setFiles] = useState([])
 
     const date = new Date();
 
@@ -33,27 +35,25 @@ const CreatePost = () => {
     };
 
     const handleSubmit = async () => {
+        const formdata = new FormData()
+        formdata.append('title', topic)
+        formdata.append('description', detail)
+        for (let i = 0; i < files.length; i++) {
+            formdata.append('files',files[i])
+        }
         if (type == 1) {
             // Announcement
-            await axios({
-                method: 'post',
-                url: 'http://localhost:3001/announcement',
-                data: {
-                    title: topic,
-                    description: detail
-                }
-            })
+            await axios.post(
+                'http://localhost:3001/announcement',
+                formdata
+            )
         } else if (type == 0) {
             // Assignment
-            await axios({
-                method: 'post',
-                url: 'http://localhost:3001/assignment',
-                data: {
-                    title: topic,
-                    description: detail,
-                    dueAt: dueDate
-                }
-            })
+            formdata.append('dueAt',dueDate)
+            await axios.post(
+                'http://localhost:3001/assignment',
+                formdata
+            )
         }
         handleClose()
     }
@@ -148,6 +148,12 @@ const CreatePost = () => {
                         </div>
 
                         {/* send file */}
+                        <div className='ml-[-30px] mb-[10px]'>
+                            <UploadFile files={files} setFiles={(e) => {
+                                setFiles(e)
+                                console.log('55555');
+                            }}/>
+                        </div>
 
                         {/* submit */}
                         <div className='flex justify-end'>
