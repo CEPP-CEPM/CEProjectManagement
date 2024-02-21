@@ -1,4 +1,5 @@
 import BtnAddGroup from "./BtnAddGroup"
+import ShowGroup from "./ShowGroup"
 
 const Group = () =>{
 
@@ -10,8 +11,7 @@ const Group = () =>{
                     <div>Manage Group</div>
                     <BtnAddGroup/>
                 </div>
-                <div className="w-[500px] h-[400px] border-2">
-                </div>
+                <ShowGroup/>
             </div>
         </div>
     )

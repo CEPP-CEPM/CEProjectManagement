@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const BtnAddGroup = ({ addGroup }) => {
+const BtnAddGroup = () => {
   const [member, setMember] = useState([]);
   const { register, handleSubmit } = useForm();
   const [data, setData] = useState("");
@@ -55,6 +55,18 @@ const BtnAddGroup = ({ addGroup }) => {
                   placeholder="Name"
                   className="input input-bordered w-[80%] "
                 />
+              </div>
+              <div className="flex gap-5">
+                <div>Tag :</div>
+                <select
+                  className="border-2 rounded-md"
+                  {...register("tag")}
+                >
+                  <option value="0">select</option>
+                  <option value="SW">SW</option>
+                  <option value="HW">HW</option>
+                  <option value="NW">NW</option>
+                </select>
               </div>
               <div className="flex gap-5">
                 <div>จำนวนสมาชิก :</div>
