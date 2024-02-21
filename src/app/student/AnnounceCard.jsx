@@ -1,8 +1,11 @@
 'use client'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const AnnounceCard = (props) => {
+    const router = useRouter()
+
     const [announceData, setAnnounceData] = useState([])
 
     useEffect(() => {
@@ -21,19 +24,27 @@ const AnnounceCard = (props) => {
         }
         fetchPost()
     },[props.type])
+
+    const handleRouter = (data) => {
+        if (data.dueAt) {
+            router.push(`student/assignment/${data.id}`)
+        } else {
+            router.push(`student/announcement/${data.id}`)
+        }
+    }
     
     const display = announceData.slice(10*(props.page-1), 10*props.page)
-    // console.log(display);
-
     props.setDatacount(announceData.length)
 
     return (
         <div>
             {display.map((data) => {
                 return (
-                    <div key={data.id} className={`flex justify-between bg-[${data.id%2 ? '#FFFFFF' : '#F5F5F5'}] py-[0.6rem] px-5 text-[#595959]`}>
-                        <div>{data.title}</div>
-                        <div className="hidden md:block">{data.createAt.slice(0, 10)}</div>
+                    <div key={data.id} className={`bg-[#F5F5F5] py-[0.6rem] px-5 text-[#595959]`}>
+                        <button className='flex justify-between w-full' onClick={() => handleRouter(data)}>
+                            <div>{data.title}</div>
+                            <div className="hidden md:block">{data.createAt.slice(0, 10)}</div>
+                        </button>
                     </div>
                 )
             })}
