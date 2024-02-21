@@ -7,7 +7,7 @@ const Group = () =>{
     return(
         <div className="flex flex-col items-center">
             <div>
-                <div className="flex justify-between">
+                <div className="flex items-center justify-between my-5">
                     <div>Manage Group</div>
                     <BtnAddGroup/>
                 </div>
