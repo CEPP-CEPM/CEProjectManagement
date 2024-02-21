@@ -7,9 +7,9 @@ const AnnounceCard = (props) => {
 
     useEffect(() => {
         const fetchPost = async () => {
-            const announce = await axios.get('http://localhost:3001/announcement')
+            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`)
                 .then((res) => res.data)
-            const assignment = await axios.get('http://localhost:3001/assignment')
+            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`)
                 .then((res) => res.data)
             if (props.type == 'Assignment') {
                 setAnnounceData([...assignment])

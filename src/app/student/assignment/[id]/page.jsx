@@ -1,5 +1,5 @@
 import Detail from "@/components/Detail";
-import UploadFile from "../../../components/UploadFile";
+import UploadFile from "@/components/UploadFile";
 
 
 const Assignment = () => {

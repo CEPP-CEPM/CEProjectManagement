@@ -1,14 +1,26 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // icon
 import { MdOutlineAssignment } from "react-icons/md";
+import axios from "axios";
 
 const AssignmentCard = () => {
     const router = useRouter()
 
-    const [assignment, setAssignment] = useState([{id:1, topic:'Assignment 1'},{id:2, topic:'Assignment 2'},{id:3, topic:'Assignment 3'}])
+    const [assignment, setAssignment] = useState([])
+
+    useEffect(() => {
+        const fetchAssignment = async () => {
+            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`)
+                .then((res) => res.data)
+            setAssignment(assignment)
+        }
+        fetchAssignment()
+    },[])
+
+    console.log(assignment);
 
     return (
         <div>
@@ -16,9 +28,12 @@ const AssignmentCard = () => {
                 return (
                     <div key={data.id}>
                         <div className="px-1 py-4">
-                            <button className="flex items-center w-full" onClick={() => router.push(`/proctor/dashboard/${data.id}`)}>
-                                <MdOutlineAssignment className=" text-[#BDBEC2] w-10 h-10 md:w-14 md:h-14 px-1 text-[25px] border-[3px] rounded-full mx-3"/>
-                                <div className="text-[18px]">{data.topic}</div>
+                            <button className="flex justify-between items-center w-full" onClick={() => router.push(`/proctor/dashboard/${data.id}`)}>
+                                <div className="flex items-center">
+                                    <MdOutlineAssignment className=" text-[#BDBEC2] w-10 h-10 md:w-14 md:h-14 px-1 text-[25px] border-[3px] rounded-full mx-3"/>
+                                    <div className="text-[18px]">{data.title}</div>
+                                </div>
+                                <div className="text-[14px]">{data.createAt.slice(0,10)}</div>
                             </button>
                         </div>
                         <hr/>
