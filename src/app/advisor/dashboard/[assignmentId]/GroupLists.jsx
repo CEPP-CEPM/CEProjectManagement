@@ -53,6 +53,14 @@ const GroupLists = () => {
                                 <div className="text-[18px]">{data.group}</div>
                             </div>
                             <div className="flex pr-4 mt-3 md:">
+                                <button className="mr-4 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800"
+                                        onClick={() => handleReject()}>
+                                            Reject
+                                </button>
+                                <button className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-800"
+                                        onClick={() => handleAccept()}>
+                                            Accept
+                                </button>
                                 <label className="px-2 swap swap-rotate">
                                     <input
                                     type="checkbox"
@@ -73,12 +81,6 @@ const GroupLists = () => {
                                         <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
                                         <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
                                         <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
-                                    </ul>
-                                </div>
-                                <div className=" mr-20">
-                                    อาจารย์ที่ปรึกษา:
-                                    <ul className="ml-10">
-                                        <li>ชื่อ นามสกุล</li>
                                     </ul>
                                 </div>
                             </div>

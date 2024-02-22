@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 const Detail = (props) =>{
     const router = useRouter()
 
-    console.log(props.data);
-
     return(
         <div className=" p-7">
             <div className="text-KMITL flex">
