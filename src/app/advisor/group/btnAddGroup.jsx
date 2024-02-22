@@ -1,30 +1,30 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const BtnAddGroup = () => {
   const [member, setMember] = useState([]);
   const { register, handleSubmit } = useForm();
-  const [data, setData] = useState("");
+  // const [data, setData] = useState("");
 
-  const addGroup = (data) =>{
+  const addGroup = async (data) => {
     try {
-      axios.post(
-        `${process.env.NEXT_PUBLIC_ENDPOINT}`.concat('/creategroup'),
-        {
+      // console.log(data);
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_ENDPOINT}/group`, {
           topic: data.topic,
-          member: data.member
-        }
-      )
-    } catch (error) {
-      
-    }
-  }
+          tag: data.tag,
+          userGroup: data.userGroup,
+        })
+        .then((res) => console.log(res));
+    } catch (error) {}
+  };
 
   const addMember = async (e) => {
     let arrMember = [];
     for (let i = 0; i < e.target.value; i++) {
-      arrMember.push("member." + `${i}`);
+      arrMember.push("userGroup." + `${i}`);
       // setMember([])
       // console.log(i)
       // setMember()
@@ -42,7 +42,7 @@ const BtnAddGroup = () => {
       </button>
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="w-[60%] rounded-lg">
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit((data) => addGroup(data))}>
             <div className="bg-KMITL px-3 py-3 text-white font-semibold rounded-t-lg">
               รายละเอียดกลุ่ม
             </div>
@@ -58,10 +58,7 @@ const BtnAddGroup = () => {
               </div>
               <div className="flex gap-5">
                 <div>Tag :</div>
-                <select
-                  className="border-2 rounded-md"
-                  {...register("tag")}
-                >
+                <select className="border-2 rounded-md" {...register("tag")}>
                   <option value="0">select</option>
                   <option value="SW">SW</option>
                   <option value="HW">HW</option>
