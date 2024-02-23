@@ -7,7 +7,7 @@ const UploadFile = (props) => {
   const hiddenFileInput = useRef(null);
 
   const handleClick = (event) => {
-    hiddenFileInput.current.click();ß
+    hiddenFileInput.current.click();
   };
 
   const handleChange = (event) => {

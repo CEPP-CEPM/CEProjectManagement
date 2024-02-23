@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 const Assignment = ({ params }) => {
 
     const [data, setData] = useState()
+    const [files, setFiles] = useState()
 
     useEffect(() => {
         const fetch = async () => {
@@ -17,13 +18,15 @@ const Assignment = ({ params }) => {
         fetch()
     }, [])
 
+    console.log(files);
+
     return (
         <>
             {data && 
                 <div>
                     <Detail data={data} type='Assignment'/>
                     <div className="text-KMITL p-7">My work</div>
-                    <UploadFile/>
+                    <UploadFile setFiles={setFiles}/>
                 </div>
             
             }
