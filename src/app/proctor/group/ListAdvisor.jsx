@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Link from 'next/link';
+
 
 const ListGroup = () => {
   const [data, setData] = useState();
@@ -19,8 +21,12 @@ const ListGroup = () => {
   return (
     <div className="flex justify-center">
       {data ? (
-        data.map((d, index) => {
-          return <div>{data[index].name} {data[index].lastname}</div>
+        data.map((d) => {
+          return <div>
+            <Link href={`group/advisor/${d.id}`}>
+            {d.name} {d.lastname}
+            </Link>
+            </div>
         })
       ) : (
         <div></div>
