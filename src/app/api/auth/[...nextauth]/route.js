@@ -9,7 +9,7 @@ export const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
         const credential = account.id_token
@@ -25,12 +25,24 @@ export const handler = NextAuth({
             },
           }
         );
-        // console.log(await resLogin.json())
+        const resToken = await resLogin.json()
+        const resUser = await fetch(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/users/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${resToken.accessToken}`,
+            },
+          }
+        );
+        const user = await resUser.json() 
+        // console.log(token.accessToken)
+        return { ...token, user, ...resToken };
       }
-      return token
+      return { ...token, ...user };
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
+      session.user = token.user
       session.accessToken = token.accessToken
       return session
     }
