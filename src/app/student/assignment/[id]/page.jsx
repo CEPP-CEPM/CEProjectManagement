@@ -26,7 +26,7 @@ const Assignment = ({ params }) => {
                 <div>
                     <Detail data={data} type='Assignment'/>
                     <div className="text-KMITL p-7">My work</div>
-                    <UploadFile setFiles={setFiles}/>
+                    <UploadFile setFiles={setFiles} files={files}/>
                 </div>
             
             }

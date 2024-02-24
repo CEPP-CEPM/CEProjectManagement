@@ -151,7 +151,6 @@ const CreatePost = () => {
                         <div className='ml-[-30px] mb-[10px]'>
                             <UploadFile files={files} setFiles={(e) => {
                                 setFiles(e)
-                                console.log('55555');
                             }}/>
                         </div>
 
