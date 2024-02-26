@@ -10,9 +10,11 @@ import { RiGroupLine } from "react-icons/ri";
 
 const GroupLists = ({ assignId }) => {
 
-    const session = useSession();
+  const session = useSession();
   const [data, setData] = useState();
   const [token, setToken] = useState('');
+  const [showMember, setShowMember] = useState()
+  const [students, setStudents] = useState()
 
   useEffect(() => {
     const fetch = async () => {
@@ -31,7 +33,7 @@ const GroupLists = ({ assignId }) => {
     if (session.status === 'authenticated') {
         setToken(session.data.accessToken);
         fetch();
-        console.log("test");
+        // console.log("test");
       }
   }, []);
 
@@ -46,7 +48,7 @@ const GroupLists = ({ assignId }) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data)
       });
     // setData(groupSubmit);
@@ -59,11 +61,28 @@ const GroupLists = ({ assignId }) => {
     // console.log(assignId);
   }
 
-  const [students, setStudents] = useState([
-    { id: 1, group: "group 1" },
-    { id: 2, group: "group 2" },
-    { id: 3, group: "group 3" },
-  ]);
+  const handleShowMember = async (groupId, index) =>{
+    if(showMember != (index+1)){
+      setShowMember(index+1)
+    }else{
+      setShowMember(0)
+    }
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/${groupId}`
+      )
+      .then((res) => {
+        // console.log(res.data);
+        setStudents(res.data)
+        console.log(res.data)
+      });
+  }
+
+  // const [students, setStudents] = useState([
+  //   { id: 1, group: "group 1" },
+  //   { id: 2, group: "group 2" },
+  //   { id: 3, group: "group 3" },
+  // ]);
 
   const handleReject = () => {
     Swal.fire({
@@ -98,7 +117,7 @@ const GroupLists = ({ assignId }) => {
   return (
     <div>
       {data &&
-        data.map((data) => {
+        data.map((data, index) => {
         //   const [expanded, setExpanded] = useState(false);
 
           return (
@@ -124,27 +143,30 @@ const GroupLists = ({ assignId }) => {
                   <label className="px-2 swap swap-rotate">
                     <input
                       type="checkbox"
-                    //   onClick={() => {
-                    //     setExpanded(!expanded);
-                    //   }}
+                      onClick={() => {
+                        handleShowMember(data.Groups.id, index);
+                      }}
                     />
                     <MdExpandMore className="swap-off text-2xl font-semibold" />
                     <MdExpandLess className="swap-on text-2xl font-semibold" />
                   </label>
                 </div>
               </div>
-              {/* {expanded && (
+              {showMember == index+1 && (
                 <div className="flex justify-between mx-5 px-1 pb-4">
                   <div>
                     สมาชิกกลุ่ม:
                     <ul className="ml-10">
+                      {students && students.map( (student) => {
+                        return <li key={student.id}>{student.name} {student.lastname} รหัสนักศึกษา</li>
+                      })}
+                      {/* <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
                       <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
-                      <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
-                      <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
+                      <li>ชื่อ นามสกุล รหัสนักศึกษา</li> */}
                     </ul>
                   </div>
                 </div>
-              )} */}
+              )}
               <hr />
             </div>
           );
