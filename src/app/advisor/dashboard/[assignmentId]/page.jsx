@@ -29,7 +29,7 @@ const page = ({params}) => {
             <div className=" mt-8 px-3 md:px-10 lg:px-28">
                 <div className="font-bold text-[20px] mb-1">Group name</div>
                 <hr/>
-                <GroupLists />
+                <GroupLists assignId={params.assignmentId} />
             </div>
         </div>
     )
