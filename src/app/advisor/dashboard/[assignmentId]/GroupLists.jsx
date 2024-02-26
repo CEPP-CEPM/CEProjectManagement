@@ -45,15 +45,18 @@ const GroupLists = ({ assignId }) => {
           },
         }
       )
-      .then((res) => res.data);
-    setData(groupSubmit);
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data)
+      });
+    // setData(groupSubmit);
   }
-  console.log(data);
+//   console.log(data);
   
   if (session.status === 'authenticated' && token == '') {
     setToken(session.data.accessToken);
     fetch();
-    console.log(assignId);
+    // console.log(assignId);
   }
 
   const [students, setStudents] = useState([
@@ -103,7 +106,7 @@ const GroupLists = ({ assignId }) => {
               <div className="md:flex justify-between items-center px-1 py-4">
                 <div className="flex items-center w-full">
                   <RiGroupLine className=" text-[#BDBEC2] w-14 h-14 px-3 text-[25px] border-[3px] rounded-full mx-3" />
-                  <div className="text-[18px]">{data.group}</div>
+                  <div className="text-[18px]">{data.Groups.topic}</div>
                 </div>
                 <div className="flex pr-4 mt-3 md:">
                   <button
