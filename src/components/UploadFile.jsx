@@ -27,7 +27,7 @@ const UploadFile = (props) => {
         style={{ display: "none" }}
       />
       {props.files && props.files.map((f) => {
-        return <div className="">{f.name}</div>;
+        return <div className="" key={f.name}>{f.name}</div>;
       })}
     </div>
   );
