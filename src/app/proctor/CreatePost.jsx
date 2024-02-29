@@ -49,6 +49,7 @@ const CreatePost = () => {
             )
         } else if (type == 0) {
             // Assignment
+            console.log(dueDate);
             formdata.append('dueAt',dueDate)
             await axios.post(
                 'http://localhost:3001/assignment',
@@ -131,6 +132,7 @@ const CreatePost = () => {
                                     onChange={(e) => {
                                         let dueAt = new Date(e.target.value)
                                         dueAt.setDate(dueAt.getDate() + 1)
+                                        dueAt = dueAt.toISOString()
                                         setDueDate(dueAt)
                                     }}
                                 />
