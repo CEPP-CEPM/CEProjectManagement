@@ -2,19 +2,18 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useSession } from 'next-auth/react';
+import { useSession } from "next-auth/react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
 // icon
 import { RiGroupLine } from "react-icons/ri";
 
 const GroupLists = ({ assignId }) => {
-
   const session = useSession();
   const [data, setData] = useState();
-  const [token, setToken] = useState('');
-  const [showMember, setShowMember] = useState()
-  const [students, setStudents] = useState()
+  const [token, setToken] = useState("");
+  const [showMember, setShowMember] = useState();
+  const [students, setStudents] = useState();
 
   useEffect(() => {
     const fetch = async () => {
@@ -30,11 +29,10 @@ const GroupLists = ({ assignId }) => {
         .then((res) => res.data);
       setData(groupSubmit);
     };
-    if (session.status === 'authenticated') {
-        setToken(session.data.accessToken);
-        fetch();
-        // console.log("test");
-      }
+    if (session.status === "authenticated") {
+      setToken(session.data.accessToken);
+      fetch();
+    }
   }, []);
 
   const fetch = async () => {
@@ -48,43 +46,31 @@ const GroupLists = ({ assignId }) => {
         }
       )
       .then((res) => {
-        // console.log(res.data);
-        setData(res.data)
+        setData(res.data);
+        console.log(res.data);
       });
-    // setData(groupSubmit);
-  }
-//   console.log(data);
-  
-  if (session.status === 'authenticated' && token == '') {
+  };
+
+  if (session.status === "authenticated" && token == "") {
     setToken(session.data.accessToken);
     fetch();
-    // console.log(assignId);
   }
 
-  const handleShowMember = async (groupId, index) =>{
-    if(showMember != (index+1)){
-      setShowMember(index+1)
-    }else{
-      setShowMember(0)
+  const handleShowMember = async (groupId, index) => {
+    if (showMember != index + 1) {
+      setShowMember(index + 1);
+    } else {
+      setShowMember(0);
     }
     await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/${groupId}`
-      )
+      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/${groupId}`)
       .then((res) => {
-        // console.log(res.data);
-        setStudents(res.data)
-        console.log(res.data)
+        setStudents(res.data);
+        // console.log(res.data)
       });
-  }
+  };
 
-  // const [students, setStudents] = useState([
-  //   { id: 1, group: "group 1" },
-  //   { id: 2, group: "group 2" },
-  //   { id: 3, group: "group 3" },
-  // ]);
-
-  const handleReject = () => {
+  const handleReject = (assignSubmitId) => {
     Swal.fire({
       title: "Do you want to reject this work?",
       showDenyButton: true,
@@ -92,14 +78,22 @@ const GroupLists = ({ assignId }) => {
       confirmButtonColor: "Red",
       denyButtonText: "cancel",
       denyButtonColor: "gray",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignSubmitId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         Swal.fire("Reject!", "", "success");
       }
     });
   };
 
-  const handleAccept = () => {
+  const handleAccept = (assignSubmitId) => {
     Swal.fire({
       title: "Do you want to accept this work?",
       showDenyButton: true,
@@ -107,8 +101,11 @@ const GroupLists = ({ assignId }) => {
       confirmButtonColor: "green",
       denyButtonText: "cancel",
       denyButtonColor: "gray",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        await axios.patch(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignSubmitId}`, {}, {headers:{Authorization: `Bearer ${token}`}}
+        );
         Swal.fire("Accept!", "", "success");
       }
     });
@@ -118,8 +115,6 @@ const GroupLists = ({ assignId }) => {
     <div>
       {data &&
         data.map((data, index) => {
-        //   const [expanded, setExpanded] = useState(false);
-
           return (
             <div key={data.id}>
               <div className="md:flex justify-between items-center px-1 py-4">
@@ -130,13 +125,13 @@ const GroupLists = ({ assignId }) => {
                 <div className="flex pr-4 mt-3 md:">
                   <button
                     className="mr-4 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800"
-                    onClick={() => handleReject()}
+                    onClick={() => handleReject(data.id)}
                   >
                     Reject
                   </button>
                   <button
                     className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-800"
-                    onClick={() => handleAccept()}
+                    onClick={() => handleAccept(data.id)}
                   >
                     Accept
                   </button>
@@ -152,17 +147,19 @@ const GroupLists = ({ assignId }) => {
                   </label>
                 </div>
               </div>
-              {showMember == index+1 && (
+              {showMember == index + 1 && (
                 <div className="flex justify-between mx-5 px-1 pb-4">
                   <div>
                     สมาชิกกลุ่ม:
                     <ul className="ml-10">
-                      {students && students.map( (student) => {
-                        return <li key={student.id}>{student.name} {student.lastname} รหัสนักศึกษา</li>
-                      })}
-                      {/* <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
-                      <li>ชื่อ นามสกุล รหัสนักศึกษา</li>
-                      <li>ชื่อ นามสกุล รหัสนักศึกษา</li> */}
+                      {students &&
+                        students.map((student) => {
+                          return (
+                            <li key={student.id}>
+                              {student.name} {student.lastname} รหัสนักศึกษา
+                            </li>
+                          );
+                        })}
                     </ul>
                   </div>
                 </div>

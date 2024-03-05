@@ -19,10 +19,10 @@ const ListGroup = () => {
 //   console.log(data);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col py-5 gap-3 items-center">
       {data ? (
         data.map((d) => {
-          return <div>
+          return <div className="bg-KMITL text-[20px] text-white px-5 rounded-md py-3">
             <Link href={`group/advisor/${d.id}`}>
             {d.name} {d.lastname}
             </Link>
