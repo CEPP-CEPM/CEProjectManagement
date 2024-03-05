@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react"
-import AnnounceCard from "../student/AnnounceCard"
+import AnnounceCard from "./AnnounceCard"
 import FilterType from "../student/FilterType"
 import Paginate from "../student/Paginate"
 import CreatePost from "./CreatePost"
@@ -25,7 +25,7 @@ const Student = () => {
                     <div>หัวข้อ</div>
                     <div>วันที่ประกาศ</div>
                 </div>
-                <AnnounceCard setDatacount={setDatacount} page={page}/>
+                <AnnounceCard setDatacount={setDatacount} page={page} type={type}/>
             </div>
             <Paginate datacount={Math.ceil(datacount/10)} page={page} setPage={setPage}/>
         </div>

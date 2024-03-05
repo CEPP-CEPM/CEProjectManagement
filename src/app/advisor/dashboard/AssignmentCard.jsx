@@ -15,13 +15,10 @@ const AssignmentCard = () => {
         const fetchAssignment = async () => {
             const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`)
                 .then((res) => res.data)
-            console.log(assignment);
             setAssignment(assignment)
         }
         fetchAssignment()
     },[])
-
-    console.log(assignment);
 
     return (
         <div>

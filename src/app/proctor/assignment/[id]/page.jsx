@@ -1,13 +1,11 @@
 'use client'
 import Detail from "@/components/Detail";
-import UploadFile from "@/components/UploadFile";
 import axios from 'axios'
 import { useState, useEffect } from "react";
 
 const Assignment = ({ params }) => {
 
     const [data, setData] = useState()
-    const [files, setFiles] = useState()
 
     useEffect(() => {
         const fetch = async () => {
@@ -20,14 +18,7 @@ const Assignment = ({ params }) => {
 
     return (
         <>
-            {data && 
-                <div>
-                    <Detail data={data} type='Assignment'/>
-                    <div className="text-KMITL p-7">My work</div>
-                    <UploadFile setFiles={setFiles}/>
-                </div>
-            
-            }
+            {data && <Detail data={data} type='Assignment'/>}
         </>
     )
 }

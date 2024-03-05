@@ -131,6 +131,7 @@ const CreatePost = () => {
                                     onChange={(e) => {
                                         let dueAt = new Date(e.target.value)
                                         dueAt.setDate(dueAt.getDate() + 1)
+                                        dueAt = dueAt.toISOString()
                                         setDueDate(dueAt)
                                     }}
                                 />
@@ -151,7 +152,6 @@ const CreatePost = () => {
                         <div className='ml-[-30px] mb-[10px]'>
                             <UploadFile files={files} setFiles={(e) => {
                                 setFiles(e)
-                                console.log('55555');
                             }}/>
                         </div>
 
