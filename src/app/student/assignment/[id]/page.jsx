@@ -3,14 +3,16 @@ import Detail from "@/components/Detail";
 import UploadFile from "@/components/UploadFile";
 import axios from "axios";
 import BtnSubmit from "./BtnSubmit";
+import BtnCancel from "./BtnCancel";
 import { useState, useEffect } from "react";
-import { useSession } from 'next-auth/react';
+import { useSession } from "next-auth/react";
 
 const Assignment = ({ params }) => {
   const session = useSession();
   const [data, setData] = useState();
+  const [assignmentSubmit, setAssignmentSubmit] = useState();
   const [files, setFiles] = useState();
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     const fetch = async () => {
@@ -22,25 +24,64 @@ const Assignment = ({ params }) => {
     fetch();
   }, []);
 
-
-  const submitassign = async () => {
-    setToken(session.data.accessToken);
-    const formdata = new FormData();
-    formdata.append("assignmentId", params.id);
-    files.map( (f) =>{
-      formdata.append("files", f)
-    })
-    try {
-      axios.post(
-        `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit`,
-        formdata,
+  const fetch = async () => {
+    const assignsubmit = await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${params.id}`,
         {
           headers: {
             Authorization: `Bearer ${session.data.accessToken}`,
-            'Content-Type': 'multipart/form-data',
           },
         }
-      ).then( (res) => console.log(res))
+      )
+      .then((res) => {
+        setAssignmentSubmit(res.data);
+        console.log(res.data);
+      });
+  };
+
+  if (session.status === "authenticated" && token == "") {
+    setToken(session.data.accessToken);
+    fetch();
+  }
+
+  const submitassign = async () => {
+    const formdata = new FormData();
+    formdata.append("assignmentId", params.id);
+    if (files) {
+      files.map((f) => {
+        formdata.append("files", f);
+      });
+    }
+    try {
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit`,
+          formdata,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => console.log(res));
+    } catch (error) {}
+  };
+
+  const cancelassign = async () => {
+    console.log(assignmentSubmit);
+    try {
+      axios
+        .delete(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${assignmentSubmit.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => console.log(res));
     } catch (error) {}
   };
 
@@ -50,8 +91,14 @@ const Assignment = ({ params }) => {
         <div>
           <Detail data={data} type="Assignment" />
           <div className="text-KMITL p-7">My work</div>
-          <UploadFile setFiles={setFiles} files={files} />
-          <BtnSubmit submitassign={submitassign}/>
+          {assignmentSubmit ? (
+            <BtnCancel cancelassign={cancelassign} />
+          ) : (
+            <div>
+              <UploadFile setFiles={setFiles} files={files} />
+              <BtnSubmit submitassign={submitassign} />
+            </div>
+          )}
         </div>
       )}
     </>
