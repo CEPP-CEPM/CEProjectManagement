@@ -1,6 +1,5 @@
 'use client'
 import { useState } from "react";
-import Swal from 'sweetalert2'
 import { MdExpandMore, MdExpandLess } from 'react-icons/md'
 
 // icon
@@ -9,36 +8,6 @@ import { RiGroupLine } from "react-icons/ri";
 const GroupLists = () => {
 
     const [students, setStudents] = useState([{id:1, group:'group 1'},{id:2, group:'group 2'},{id:3, group:'group 3'}])
-
-    const handleReject = () => {
-        Swal.fire({
-            title: "Do you want to reject this work?",
-            showDenyButton: true,
-            confirmButtonText: "Reject",
-            confirmButtonColor: "Red",
-            denyButtonText: "cancel",
-            denyButtonColor: "gray"
-        }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire("Reject!", "", "success");
-        }
-        });
-    }
-
-    const handleAccept = () => {
-        Swal.fire({
-            title: "Do you want to accept this work?",
-            showDenyButton: true,
-            confirmButtonText: "confirm",
-            confirmButtonColor: "green",
-            denyButtonText: "cancel",
-            denyButtonColor: "gray"
-        }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire("Accept!", "", "success");
-        }
-        });
-    }
 
     return (
         <div>

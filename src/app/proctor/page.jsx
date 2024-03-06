@@ -4,6 +4,7 @@ import AnnounceCard from "./AnnounceCard"
 import FilterType from "../student/FilterType"
 import Paginate from "../student/Paginate"
 import CreatePost from "./CreatePost"
+import AddUser from "./AddUser"
 
 const Student = () => {
 
@@ -15,9 +16,12 @@ const Student = () => {
 
     return (
         <div className="px-7 md:px-40 py-6">
-            <div className="flex justify-end mb-6 mt-1">
-                <CreatePost />
-                <FilterType setType={setType}/>
+            <div className="flex justify-between items-center mb-6 mt-1">
+                <AddUser />
+                <div className="flex">
+                    <CreatePost />
+                    <FilterType setType={setType}/>
+                </div>
             </div>
             <div className=" shadow-md rounded-xl">
                 <div className=" bg-[#FF6E2F] rounded-t-xl py-[0.6rem] px-5 font-bold text-white">{type ? type : 'ทั้งหมด'}</div>

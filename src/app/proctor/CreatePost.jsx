@@ -44,14 +44,14 @@ const CreatePost = () => {
         if (type == 1) {
             // Announcement
             await axios.post(
-                'http://localhost:3001/announcement',
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
                 formdata
             )
         } else if (type == 0) {
             // Assignment
             formdata.append('dueAt',dueDate)
             await axios.post(
-                'http://localhost:3001/assignment',
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`,
                 formdata
             )
         }

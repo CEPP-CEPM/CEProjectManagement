@@ -16,6 +16,7 @@ const UploadFile = (props) => {
   };
 
   const handleFile = (file) => {
+    console.log(file);
     props.setFiles(file)
   };
 
