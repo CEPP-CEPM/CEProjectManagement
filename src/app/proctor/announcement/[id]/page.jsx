@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2'
+import { useSession } from "next-auth/react";
 
 const Announcement = ({ params }) => {
 
+    const session = useSession()
     const router = useRouter()
 
     const [data, setData] = useState()
