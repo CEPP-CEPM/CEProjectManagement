@@ -7,36 +7,64 @@ const Group = () => {
   const session = useSession();
   const [token, setToken] = useState("");
   const [group, setGroup] = useState();
+  const [checkJoin, setCheckJoin] = useState();
+
+  const fetch = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/member`, {
+        headers: {
+          Authorization: `Bearer ${session.data.accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setGroup(res.data);
+      });
+
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/check`, {
+        headers: {
+          Authorization: `Bearer ${session.data.accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setCheckJoin(res.data);
+      });
+  };
 
   useEffect(() => {
-    const fetch = async () => {
-      await axios
-        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/member/1`, {
-          headers: {
-            Authorization: `Bearer ${session.data.accessToken}`,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          setGroup(res.data);
-        });
-    };
     if (session.status == "authenticated") {
       setToken(session.data.accessToken);
       fetch();
     }
   }, [session.status]);
 
-  const acceptgroup =  async() =>{
-    await axios.patch(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/join`,{}, {
+  const acceptgroup = async () => {
+    await axios
+      .patch(
+        `${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/invite`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) fetch();
+      });
+  };
+
+  const rejectgroup = async () => {
+    await axios
+      .delete(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/invite`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => console.log(res.data)
-
-      )
-  }
+      .then((res) => console.log(res.data));
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -55,14 +83,21 @@ const Group = () => {
               </div>
             );
           })}
-          <div>
-            <button className="btn btn-error">Reject</button>
-            <button className="btn btn-success" onClick={acceptgroup}>Accept</button>
-          </div>
+          {!checkJoin && (
+            <div className="flex justify-end gap-5 mt-3">
+              <button className="btn btn-error" onClick={rejectgroup}>
+                Reject
+              </button>
+              <button className="btn btn-success" onClick={acceptgroup}>
+                Accept
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default Group;
