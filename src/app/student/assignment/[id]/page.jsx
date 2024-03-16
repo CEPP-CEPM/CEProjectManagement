@@ -96,10 +96,9 @@ const Assignment = ({ params }) => {
           <Detail data={data} type="Assignment" />
           <div className="text-KMITL p-7">My work</div>
           {assignmentSubmit ? (
-            <div>
+            <div className="px-7">
               {assignmentSubmit.AssignmentSubmitFiles && assignmentSubmit.AssignmentSubmitFiles.map( (f) => {
               return <ShowFileSubmit files={f} key={f.id}/>
-              // return <div>test</div>
               })}
               <BtnCancel cancelassign={cancelassign} />
             </div>
