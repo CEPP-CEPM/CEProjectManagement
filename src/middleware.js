@@ -8,7 +8,7 @@ export default withAuth(function middleware(request) {
     if(role == "STUDENT" && !request.nextUrl.pathname.startsWith('/student')){
         return NextResponse.redirect("http://localhost:3000/student")
     //     return NextResponse.rewrite(new URL('/student', request.url));
-    }else if(role == "ADVISOR" && !request.nextUrl.pathname.startsWith('/student')){
+    }else if(role == "ADVISOR" && !request.nextUrl.pathname.startsWith('/advisor')){
         return NextResponse.redirect("http://localhost:3000/advisor")
 
     // //     return NextResponse.rewrite(new URL('/advisor', request.url));
