@@ -5,6 +5,7 @@ import FilterType from "../student/FilterType"
 import Paginate from "../student/Paginate"
 import CreatePost from "./CreatePost"
 import AddUser from "./AddUser"
+import CreateSubject from "./CreateSubject"
 
 const Student = () => {
 
@@ -17,7 +18,10 @@ const Student = () => {
     return (
         <div className="px-7 md:px-40 py-6">
             <div className="flex justify-between items-center mb-6 mt-1">
-                <AddUser />
+                <div className="flex">
+                    <CreateSubject />
+                    <AddUser /> 
+                </div>
                 <div className="flex">
                     <CreatePost />
                     <FilterType setType={setType}/>

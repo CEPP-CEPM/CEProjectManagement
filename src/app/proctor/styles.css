@@ -13,3 +13,7 @@
 .dropdown-content {
     @apply absolute w-auto z-[2] overflow-auto rounded-[5px] bg-[#BDBEC2] text-[12px] text-[#FFFFFF];
 }
+
+.createSubject {
+    @apply h-[40px] w-[97%] rounded-[6px] border-[1px] border-[#BDBEC2] px-[5px] text-[14px] focus:outline-none;
+}
