@@ -11,6 +11,7 @@ import DeleteSubject from "./DeleteSubject"
 const Student = () => {
 
     const [type, setType] = useState(null)
+    const [subject, setSubject] = useState(null)
 
     //paginate
     const [datacount, setDatacount] = useState(2)
