@@ -4,6 +4,7 @@ import UploadFile from "@/components/UploadFile";
 import axios from "axios";
 import BtnSubmit from "./BtnSubmit";
 import BtnCancel from "./BtnCancel";
+import ShowFileSubmit from "./ShowfileSubmit";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
@@ -54,6 +55,9 @@ const Assignment = ({ params }) => {
       });
     }
     try {
+      for (const value of formdata.values()) {
+        console.log(value);
+      }
       axios
         .post(
           `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit`,
@@ -65,7 +69,7 @@ const Assignment = ({ params }) => {
             },
           }
         )
-        .then((res) => console.log(res));
+        // .then((res) => console.log(res));
     } catch (error) {}
   };
 
@@ -92,7 +96,12 @@ const Assignment = ({ params }) => {
           <Detail data={data} type="Assignment" />
           <div className="text-KMITL p-7">My work</div>
           {assignmentSubmit ? (
-            <BtnCancel cancelassign={cancelassign} />
+            <div className="px-7">
+              {assignmentSubmit.AssignmentSubmitFiles && assignmentSubmit.AssignmentSubmitFiles.map( (f) => {
+              return <ShowFileSubmit files={f} key={f.id}/>
+              })}
+              <BtnCancel cancelassign={cancelassign} />
+            </div>
           ) : (
             <div>
               <UploadFile setFiles={setFiles} files={files} />
