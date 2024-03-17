@@ -6,6 +6,7 @@ import Paginate from "../student/Paginate"
 import CreatePost from "./CreatePost"
 import AddUser from "./AddUser"
 import CreateSubject from "./CreateSubject"
+import DeleteSubject from "./DeleteSubject"
 
 const Student = () => {
 
@@ -20,6 +21,7 @@ const Student = () => {
             <div className="flex justify-between items-center mb-6 mt-1">
                 <div className="flex">
                     <CreateSubject />
+                    <DeleteSubject />
                     <AddUser /> 
                 </div>
                 <div className="flex">

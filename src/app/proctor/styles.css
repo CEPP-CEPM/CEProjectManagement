@@ -15,5 +15,5 @@
 }
 
 .createSubject {
-    @apply h-[40px] w-[97%] rounded-[6px] border-[1px] border-[#BDBEC2] px-[5px] text-[14px] focus:outline-none;
+    @apply h-[40px] w-[100%] rounded-[6px] border-[1px] border-[#BDBEC2] px-[5px] text-[14px] focus:outline-none;
 }

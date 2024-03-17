@@ -44,7 +44,7 @@ const CreateSubject = () => {
                             value={subject}
                         />
                         <div className='flex justify-end mt-5'>
-                            <button className="border-[#FF6E2F] border-[1px] py-2 px-3 text-[#FF6E2F] rounded-md hover:bg-[#FF6E2F] hover:text-white mr-3 right-0"
+                            <button className="border-[#FF6E2F] border-[1px] py-2 px-3 text-[#FF6E2F] rounded-md hover:bg-[#FF6E2F] hover:text-white right-0"
                                     onClick={() => handleSubmit()}>
                                     Create
                             </button>
