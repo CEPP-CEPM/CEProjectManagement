@@ -16,14 +16,21 @@ const Assignment = ({ params }) => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetch = async (token) => {
       const assign = await axios
-        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
+        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => res.data);
       setData(assign);
     };
-    fetch();
-  }, []);
+    if (session.status === "authenticated") {
+      fetch(session.data.accessToken)
+    }
+  }, [session]);
 
   const fetch = async () => {
     const assignsubmit = await axios
