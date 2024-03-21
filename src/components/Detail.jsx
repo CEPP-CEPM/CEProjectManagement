@@ -14,14 +14,14 @@ const Detail = (props) =>{
                 Back 
             </div>
             <div className="flex justify-between items-center my-6">
-                <div className="text-[40px]">{props.data.title}</div>
+                <div className="text-[40px]">{props.data[0].title}</div>
                 <div className="bg-KMITL text-white p-5 rounded-[10px]">{props.type}</div>
             </div>
             <div className=" flex gap-20 mb-5">
-                {/* <div>{props.name}</div> */}
-                <div>{props.data.createAt.slice(0,10)}</div>
+                <div>create By : {props.data[1].name}</div>
+                <div>Date : {props.data[0].createAt.slice(0,10)}</div>
             </div>
-            <div className="w-[75%]">{props.data.description}</div>
+            <div className="w-[75%]">{props.data[0].description}</div>
         </div>
     )
 }

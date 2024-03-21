@@ -15,13 +15,18 @@ const Announcement = ({ params }) => {
     const [files, setFiles] = useState()
 
     useEffect(() => {
-        const fetch = async () => {
-            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/${params.id}`)
-                .then((res) => res.data)
+        const fetch = async (token) => {
+            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/${params.id}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.data)
             setData(announce)
         }
-        fetch()
-    }, [])
+        if (session.status === "authenticated") {
+            fetch(session.data.accessToken)
+        }
+    }, [session])
 
     const handleDelete = async () => {
         Swal.fire({
