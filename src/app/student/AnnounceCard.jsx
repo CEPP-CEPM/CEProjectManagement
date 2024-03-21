@@ -54,11 +54,17 @@ const AnnounceCard = (props) => {
     return (
         <div>
             {display.map((data) => {
+                let date = new Date(data.createAt.slice(0, 19))
+                if (date.getHours() > 16) {
+                    date.setDate(date.getDate()+1)
+                }
+                date.setHours((date.getHours()+7)%24)
+                date = date.toDateString()
                 return (
                     <div key={data.id} className={`bg-[#F5F5F5] py-[0.6rem] px-5 text-[#595959]`}>
                         <button className='flex justify-between w-full' onClick={() => handleRouter(data)}>
                             <div>{data.title}</div>
-                            <div className="hidden md:block">{data.createAt.slice(0, 10)}</div>
+                            <div className="hidden md:block">{date}</div>
                         </button>
                     </div>
                 )

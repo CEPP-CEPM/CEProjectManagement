@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 const Detail = (props) =>{
     const router = useRouter()
 
+    let date = new Date(props.data[0].createAt)
+    let dueAt
+    if (props.data[0].dueAt) {
+        dueAt = new Date(props.data[0].dueAt)
+        dueAt.setHours(dueAt.getHours()-7)
+        dueAt = dueAt.toString().slice(0,25)
+    }
+
     return(
         <div className=" p-7">
             <div className="text-KMITL flex">
@@ -19,7 +27,10 @@ const Detail = (props) =>{
             </div>
             <div className=" flex gap-20 mb-5">
                 <div>create By : {props.data[1].name}</div>
-                <div>Date : {props.data[0].createAt.slice(0,10)}</div>
+                <div>Date : {date.toDateString()}</div>
+                {props.type==='Assignment' ? (
+                    <div>Due-Date : {dueAt}</div>
+                ): null}
             </div>
             <div className="w-[75%]">{props.data[0].description}</div>
         </div>
