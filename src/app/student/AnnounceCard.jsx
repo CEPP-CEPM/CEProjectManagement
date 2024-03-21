@@ -13,7 +13,7 @@ const AnnounceCard = (props) => {
     const [token, setToken] = useState("");
 
     useEffect(() => {
-        const fetchPost = async () => {
+        const fetchPost = async (token) => {
             const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
             {
                 headers: {
@@ -36,9 +36,9 @@ const AnnounceCard = (props) => {
         }
         if (session.status === "authenticated") {
             setToken(session.data.accessToken)
-            fetchPost()
+            fetchPost(session.data.accessToken)
         }
-    },[props.type,session,token])
+    },[props.type,session])
 
     const handleRouter = (data) => {
         if (data.dueAt) {

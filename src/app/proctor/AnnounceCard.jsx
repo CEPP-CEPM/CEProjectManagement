@@ -2,18 +2,29 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 const AnnounceCard = (props) => {
+    const session = useSession()
     const router = useRouter()
 
     const [announceData, setAnnounceData] = useState([])
+    const [token, setToken] = useState("");
 
     useEffect(() => {
-        const fetchPost = async () => {
-            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`)
-                .then((res) => res.data)
-            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`)
-                .then((res) => res.data)
+        const fetchPost = async (token) => {
+            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.data)
+            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.data)
             if (props.type == 'Assignment') {
                 setAnnounceData([...assignment])
             } else if (props.type == 'Announcement') {
@@ -22,8 +33,11 @@ const AnnounceCard = (props) => {
                 setAnnounceData([...announce, ...assignment])
             }
         }
-        fetchPost()
-    },[props.type])
+        if (session.status === "authenticated") {
+            setToken(session.data.accessToken)
+            fetchPost(session.data.accessToken)
+        }
+    },[props.type,session])
 
     const handleRouter = (data) => {
         if (data.dueAt) {

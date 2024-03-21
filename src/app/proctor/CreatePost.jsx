@@ -1,12 +1,16 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import UploadFile from '@/components/UploadFile';
 import axios from 'axios'
+import { useSession } from 'next-auth/react';
 import './styles.css'
 
 const CreatePost = () => {
+
+    const session = useSession()
+    const [token, setToken] = useState()
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -37,7 +41,9 @@ const CreatePost = () => {
 
     const handleSubmit = async () => {
         setSubmit(true)
-        if (topic === '' || dueDate === '' || detail === '') {
+        if ((topic === '' || dueDate === '' || detail === '') && type == 0) {
+            return
+        } else if ((topic === '' || detail === '') && type == 1) {
             return
         }
         const formdata = new FormData()
@@ -49,19 +55,34 @@ const CreatePost = () => {
         if (type == 1) {
             // Announcement
             await axios.post(
-                `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
-                formdata
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`, formdata,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                },
             )
         } else if (type == 0) {
             // Assignment
             formdata.append('dueAt',dueDate)
+            console.log(token);
             await axios.post(
-                `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`,
-                formdata
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`, formdata,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                },
             )
         }
         handleClose()
     }
+
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            setToken(session.data.accessToken)
+        }
+    }, [session,token])
 
     return (
         <div className=''>
@@ -113,7 +134,7 @@ const CreatePost = () => {
                             <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>หัวข้อ</h2>
                             <input
                             type='topic'
-                            className={`createPost_postForm_topicInput ${submit && (dueDate==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'}`}
+                            className={`createPost_postForm_topicInput ${submit && (topic==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'}`}
                             placeholder='หัวข้อ'
                             onChange={(e) => setTopic(e.target.value)}
                             value={topic}
