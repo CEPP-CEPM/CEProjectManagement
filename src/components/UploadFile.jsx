@@ -11,7 +11,12 @@ const UploadFile = (props) => {
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files;
-    props.setFiles(Array.from(fileUploaded))
+    const newfile = Array.from(fileUploaded)
+    if (!props.files) {
+      props.setFiles(newfile)
+    }else{
+      props.setFiles([...props.files,...newfile])
+    }
   };
 
   return (

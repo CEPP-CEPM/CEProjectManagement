@@ -1,10 +1,10 @@
 'use client'
 import { MdArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import ShowFile from "./ShowFile";
 
 const Detail = (props) =>{
     const router = useRouter()
-
     return(
         <div className=" p-7">
             <div className="text-KMITL flex">
@@ -22,6 +22,11 @@ const Detail = (props) =>{
                 <div>{props.data.createAt.slice(0,10)}</div>
             </div>
             <div className="w-[75%]">{props.data.description}</div>
+            {props.data.AnnouncementFiles?.map((file)=>{
+                console.log(file)
+                return <ShowFile file={file}/>
+            })
+            }
         </div>
     )
 }

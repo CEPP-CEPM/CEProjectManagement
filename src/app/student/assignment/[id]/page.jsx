@@ -7,6 +7,7 @@ import BtnCancel from "./BtnCancel";
 import ShowFileSubmit from "./ShowfileSubmit";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import BtnApprove from "./BtnApprove";
 
 const Assignment = ({ params }) => {
   const session = useSession();
@@ -15,17 +16,11 @@ const Assignment = ({ params }) => {
   const [files, setFiles] = useState();
   const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const fetch = async () => {
-      const assign = await axios
-        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
-        .then((res) => res.data);
-      setData(assign);
-    };
-    fetch();
-  }, []);
-
   const fetch = async () => {
+    const assign = await axios
+      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
+      .then((res) => res.data);
+    setData(assign);
     const assignsubmit = await axios
       .get(
         `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${params.id}`,
@@ -37,14 +32,15 @@ const Assignment = ({ params }) => {
       )
       .then((res) => {
         setAssignmentSubmit(res.data);
-        console.log(res.data);
       });
   };
 
-  if (session.status === "authenticated" && token == "") {
-    setToken(session.data.accessToken);
-    fetch();
-  }
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setToken(session.data.accessToken);
+      fetch();
+    }
+  }, [session.status]);
 
   const submitassign = async () => {
     const formdata = new FormData();
@@ -55,9 +51,6 @@ const Assignment = ({ params }) => {
       });
     }
     try {
-      for (const value of formdata.values()) {
-        console.log(value);
-      }
       axios
         .post(
           `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit`,
@@ -69,12 +62,15 @@ const Assignment = ({ params }) => {
             },
           }
         )
-        // .then((res) => console.log(res));
+        .then((res) => {
+          if (res.status === 201) {
+            fetch();
+          }
+        });
     } catch (error) {}
   };
 
   const cancelassign = async () => {
-    console.log(assignmentSubmit);
     try {
       axios
         .delete(
@@ -85,7 +81,11 @@ const Assignment = ({ params }) => {
             },
           }
         )
-        .then((res) => console.log(res));
+        .then((res) => {
+          if (res.status === 200) {
+            fetch();
+          }
+        });
     } catch (error) {}
   };
 
@@ -97,10 +97,15 @@ const Assignment = ({ params }) => {
           <div className="text-KMITL p-7">My work</div>
           {assignmentSubmit ? (
             <div className="px-7">
-              {assignmentSubmit.AssignmentSubmitFiles && assignmentSubmit.AssignmentSubmitFiles.map( (f) => {
-              return <ShowFileSubmit files={f} key={f.id}/>
-              })}
-              <BtnCancel cancelassign={cancelassign} />
+              {assignmentSubmit.AssignmentSubmitFiles &&
+                assignmentSubmit.AssignmentSubmitFiles.map((f) => {
+                  return <ShowFileSubmit files={f} key={f.id} />;
+                })}
+              {assignmentSubmit.status == "APPROVE" ? (
+                <BtnApprove />
+              ) : (
+                <BtnCancel cancelassign={cancelassign} />
+              )}
             </div>
           ) : (
             <div>

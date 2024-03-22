@@ -11,6 +11,7 @@ const Announcement = ({ params }) => {
         const fetch = async () => {
             const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/${params.id}`)
                 .then((res) => res.data)
+            console.log(announce);
             setData(announce)
         }
         fetch()
