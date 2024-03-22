@@ -7,6 +7,7 @@ import CreatePost from "./CreatePost"
 import AddUser from "./AddUser"
 import CreateSubject from "./CreateSubject"
 import DeleteSubject from "./DeleteSubject"
+import SelectSubject from "./SelectSubject"
 
 const Student = () => {
 
@@ -23,6 +24,7 @@ const Student = () => {
                 <div className="flex">
                     <CreateSubject />
                     <DeleteSubject />
+                    <SelectSubject subject={subject} setSubject={setSubject}/>
                     <AddUser /> 
                 </div>
                 <div className="flex">
