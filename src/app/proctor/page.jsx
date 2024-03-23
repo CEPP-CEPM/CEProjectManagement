@@ -28,7 +28,7 @@ const Student = () => {
                     <AddUser /> 
                 </div>
                 <div className="flex">
-                    <CreatePost />
+                    <CreatePost subject={subject}/>
                     <FilterType setType={setType}/>
                 </div>
             </div>
@@ -38,7 +38,7 @@ const Student = () => {
                     <div>หัวข้อ</div>
                     <div>วันที่ประกาศ</div>
                 </div>
-                <AnnounceCard setDatacount={setDatacount} page={page} type={type}/>
+                <AnnounceCard setDatacount={setDatacount} page={page} type={type} subject={subject}/>
             </div>
             <Paginate datacount={Math.ceil(datacount/10)} page={page} setPage={setPage}/>
         </div>

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import axios from 'axios'
@@ -7,21 +7,46 @@ import axios from 'axios'
 const DeleteSubject = () => {
 
     const [open, setOpen] = useState(false);
+
+    const [deleteSubject, setDeleteSubject] = useState(null)
+    const [disableButton, setDisableButton] = useState(true)
+
+    const [subject, setSubject] = useState([])
+
+    const handleSubmit = async () => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_ENDPOINT}/subjects/${deleteSubject}`)
+        .then((res) => {
+            console.log(`Deleted post with ID ${deleteSubject}`);
+        })
+        handleClose()
+    }
+
+    const fetch = async () => {
+        const allSubject = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/subjects`,
+            // {
+            //     headers: {
+            //         Authorization: `Bearer ${token}`,
+            //     }
+            // },
+        ).then((res) => res.data)
+        setSubject([...allSubject])
+    } 
+
     const handleOpen = () => {
+        fetch()
         setDeleteSubject(null)
         setDisableButton(true)
         setOpen(true)
     }
     const handleClose = () => setOpen(false);
 
-    const [deleteSubject, setDeleteSubject] = useState(null)
-    const [disableButton, setDisableButton] = useState(true)
-
-    const [subject, setSubject] = useState(['2565', '2566', '2567', '2568', '2569', '2570', '2571', '2572', '2570', '2571', '2572'])
-
-    const handleSubmit = async () => {
-        handleClose()
-    }
+    useEffect(() => {
+        // if (session.status === "authenticated") {
+        //     setToken(session.data.accessToken)
+        //     fetchPost(session.data.accessToken)
+        // }
+        fetch()
+    }, [])
 
     return (
         <div className="flex">
@@ -45,14 +70,15 @@ const DeleteSubject = () => {
                         <div className='text-[25px] font-bold mb-4'>Delete Subject</div>
                         <div className='h-[63%] border-[2px] border-[#BDBEC2] rounded-md overflow-scroll'>
                             <div className='grid grid-cols-3 gap-3 justify-between my-3 mx-3'>
-                                {subject.map((subject, index) => {
+                                {subject.map((data) => {
                                     return (
-                                        <button key={index} className={`flex items-center justify-center py-3 ${subject===deleteSubject ? 'border-[#FF5555] bg-[#FF5555] text-white' : 'border-[#BDBEC2]'} border-[1px] rounded-md hover:border-[#FF5555] hover:text-white hover:bg-[#FF5555]`}
+                                        <button key={data.id} className={`flex items-center justify-center py-3 ${data.id===deleteSubject ? 'border-[#FF5555] bg-[#FF5555] text-white' : 'border-[#BDBEC2]'} border-[1px] rounded-md hover:border-[#FF5555] hover:text-white hover:bg-[#FF5555]`}
                                                 onClick={() => {
                                                     setDisableButton(false)
-                                                    {subject === deleteSubject ? setDeleteSubject(null) : setDeleteSubject(subject)}
+                                                    {data.id === deleteSubject ? setDeleteSubject(null) : setDeleteSubject(data.id)}
+                                                    console.log(deleteSubject);
                                                 }}>
-                                            {subject}
+                                            {data.subjectName}
                                         </button>
                                     )
                                 })}

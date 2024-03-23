@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import axios from 'axios'
@@ -12,7 +13,16 @@ const CreateSubject = () => {
     const handleClose = () => setOpen(false);
 
     const handleSubmit = async () => {
-        
+        await axios.post(
+            `${process.env.NEXT_PUBLIC_ENDPOINT}/subjects`,{
+                subject: subject,
+            },
+            // {
+            //     headers: {
+            //         Authorization: `Bearer ${token}`,
+            //     }
+            // },
+        )
         handleClose()
     }
 
