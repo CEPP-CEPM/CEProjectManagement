@@ -42,9 +42,9 @@ const AnnounceCard = (props) => {
 
     const handleRouter = (data) => {
         if (data.dueAt) {
-            router.push(`student/assignment/${data.id}`)
+            router.push(`advisor/assignment/${data.id}`)
         } else {
-            router.push(`student/announcement/${data.id}`)
+            router.push(`advisor/announcement/${data.id}`)
         }
     }
     

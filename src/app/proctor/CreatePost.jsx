@@ -1,12 +1,16 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import UploadFile from '@/components/UploadFile';
 import axios from 'axios'
+import { useSession } from 'next-auth/react';
 import './styles.css'
 
-const CreatePost = () => {
+const CreatePost = (props) => {
+
+    const session = useSession()
+    const [token, setToken] = useState()
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -15,8 +19,9 @@ const CreatePost = () => {
     const [type, setType] = useState(true);
     const [topic, setTopic] = useState('');
     const [dueDate, setDueDate] = useState('');
-    const [detail, setDetail] = useState(' ');
+    const [detail, setDetail] = useState('');
     const [files, setFiles] = useState([])
+    const [submit, setSubmit] = useState(false)
 
     const date = new Date();
 
@@ -35,29 +40,51 @@ const CreatePost = () => {
     };
 
     const handleSubmit = async () => {
+        setSubmit(true)
+        if ((topic === '' || dueDate === '' || detail === '') && type == 0) {
+            return
+        } else if ((topic === '' || detail === '') && type == 1) {
+            return
+        }
         const formdata = new FormData()
         formdata.append('title', topic)
         formdata.append('description', detail)
+        formdata.append('subjectName', props.subject)
         for (let i = 0; i < files.length; i++) {
             formdata.append('files',files[i])
         }
         if (type == 1) {
             // Announcement
             await axios.post(
-                'http://localhost:3001/announcement',
-                formdata
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`, formdata,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                },
             )
         } else if (type == 0) {
             // Assignment
             console.log(dueDate);
             formdata.append('dueAt',dueDate)
+            console.log(token);
             await axios.post(
-                'http://localhost:3001/assignment',
-                formdata
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`, formdata,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                },
             )
         }
         handleClose()
     }
+
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            setToken(session.data.accessToken)
+        }
+    }, [session,token])
 
     return (
         <div className=''>
@@ -109,7 +136,7 @@ const CreatePost = () => {
                             <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>หัวข้อ</h2>
                             <input
                             type='topic'
-                            className='createPost_postForm_topicInput'
+                            className={`createPost_postForm_topicInput ${submit && (topic==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'}`}
                             placeholder='หัวข้อ'
                             onChange={(e) => setTopic(e.target.value)}
                             value={topic}
@@ -128,7 +155,7 @@ const CreatePost = () => {
                                     type='date'
                                     name='dueDate'
                                     min={`${currentDate}`}
-                                    className='rounded-[6px] border-[1px] border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2] '
+                                    className={`rounded-[6px] border-[1px] ${submit && (dueDate==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'} border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2]`}
                                     onChange={(e) => {
                                         let dueAt = new Date(e.target.value)
                                         dueAt.setDate(dueAt.getDate() + 1)
@@ -145,7 +172,7 @@ const CreatePost = () => {
                         {/* detail */}
                         <div className='mb-[10px]'>
                             <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>รายละเอียด</h2>
-                            <textarea name="" id="" cols="" rows="7" spellCheck='true' className=' w-full resize-none border-[1px] border-[#BDBEC2] rounded-[6px] px-2 py-2 outline-none'
+                            <textarea name="" id="" cols="" rows="7" spellCheck='true' className={` w-full resize-none ${submit && (detail==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'} rounded-[6px] px-2 py-2 outline-none`}
                                     onChange={(e) => setDetail(e.target.value)}></textarea>
                         </div>
 

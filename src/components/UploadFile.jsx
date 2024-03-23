@@ -11,8 +11,20 @@ const UploadFile = (props) => {
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files;
-    props.setFiles(Array.from(fileUploaded))
+    const newfile = Array.from(fileUploaded)
+    if (!props.files) {
+      props.setFiles(newfile)
+    }else{
+      props.setFiles([...props.files,...newfile])
+    }
   };
+
+  const removeFile = (files) => {
+    const newFiles = [...props.files];
+    newFiles.splice(newFiles.indexOf(files), 1);
+    props.setFiles(newFiles);
+  };
+
 
   return (
     <div className="px-10">
@@ -27,7 +39,10 @@ const UploadFile = (props) => {
         style={{ display: "none" }}
       />
       {props.files && props.files.map((f) => {
-        return <div className="">{f.name}</div>;
+        return <div className="bg-[#D2D2D2] h-[40px] flex items-center justify-between px-5 w-[50%] mt-5 rounded-lg" key={f.name}>
+          <div>{f.name}</div>
+          <button onClick={()=>removeFile(f)}>X</button>
+          </div>;
       })}
     </div>
   );

@@ -1,6 +1,6 @@
 import AssignmentCard from "./AssignmentCard"
 
-const AssignmentList = () => {
+const AssignmentList = (props) => {
     return (
         <div className=" mt-8 px-3 md:px-10 lg:px-28">
             <div className="font-bold text-[24px] mb-1">Assignment</div>
@@ -9,7 +9,7 @@ const AssignmentList = () => {
             <div className="flex justify-end">Create Date</div>
             {/* </div> */}
             <hr/>
-            <AssignmentCard />
+            <AssignmentCard subject={props.subject}/>
         </div>
     )
 }
