@@ -46,7 +46,7 @@ const Navbar = () => {
               <a>Hall of Frame</a>
             </li>
             <li>
-              <a>Subject</a>
+              <a>Group</a>
             </li>
             <li>
             <details>

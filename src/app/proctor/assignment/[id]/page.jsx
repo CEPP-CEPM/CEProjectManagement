@@ -38,7 +38,11 @@ const Assignment = ({ params }) => {
             denyButtonColor: "gray"
         }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
+            axios.delete(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((res) => {
                 console.log(`Deleted post with ID ${params.id}`);
             })

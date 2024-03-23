@@ -7,7 +7,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react';
 import './styles.css'
 
-const CreatePost = () => {
+const CreatePost = (props) => {
 
     const session = useSession()
     const [token, setToken] = useState()
@@ -49,6 +49,7 @@ const CreatePost = () => {
         const formdata = new FormData()
         formdata.append('title', topic)
         formdata.append('description', detail)
+        formdata.append('subjectName', props.subject)
         for (let i = 0; i < files.length; i++) {
             formdata.append('files',files[i])
         }

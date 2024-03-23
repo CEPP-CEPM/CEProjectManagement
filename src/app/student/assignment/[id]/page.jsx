@@ -16,48 +16,63 @@ const Assignment = ({ params }) => {
   const [files, setFiles] = useState();
   const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const fetch = async (token) => {
-      const assign = await axios
-        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => res.data);
-      setData(assign);
-    };
-    if (session.status === "authenticated") {
-      fetch(session.data.accessToken)
-    }
-  }, [session]);
-
   const fetch = async () => {
     const assign = await axios
-      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
+      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.data.accessToken}`,
+        },
+      })
       .then((res) => res.data);
     setData(assign);
     const assignsubmit = await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${params.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${session.data.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        setAssignmentSubmit(res.data);
-      });
+    .get(
+      `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${params.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.data.accessToken}`,
+        },
+      }
+    )
+    .then((res) => {
+      setAssignmentSubmit(res.data);
+    });
   };
 
   useEffect(() => {
     if (session.status === "authenticated") {
-      setToken(session.data.accessToken);
-      fetch();
+      setToken(session.data.accessToken)
+      fetch()
     }
-  }, [session.status]);
+  }, [session]);
+
+  // const fetch = async () => {
+  //   console.log(session.data.accessToken);
+  //   const assign = await axios
+  //     .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
+  //     .then((res) => res.data);
+  //   setData(assign);
+  //   const assignsubmit = await axios
+  //     .get(
+  //       `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${params.id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${session.data.accessToken}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setAssignmentSubmit(res.data);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   if (session.status === "authenticated") {
+  //     setToken(session.data.accessToken);
+  //     fetch();
+  //   }
+  // }, [session.status]);
 
   const submitassign = async () => {
     const formdata = new FormData();
@@ -105,6 +120,7 @@ const Assignment = ({ params }) => {
         });
     } catch (error) {}
   };
+  // console.log(data);
 
   return (
     <>

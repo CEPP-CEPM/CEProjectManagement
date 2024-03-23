@@ -22,7 +22,7 @@ const GroupLists = ({ assignId }) => {
           `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${session.data.accessToken}`,
             },
           }
         )
@@ -33,28 +33,28 @@ const GroupLists = ({ assignId }) => {
       setToken(session.data.accessToken);
       fetch();
     }
-  }, []);
+  }, [session.status]);
 
-  const fetch = async () => {
-    const groupSubmit = await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${session.data.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        setData(res.data);
-        console.log(res.data);
-      });
-  };
+  // const fetch = async () => {
+  //   const groupSubmit = await axios
+  //     .get(
+  //       `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${session.data.accessToken}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setData(res.data);
+  //       console.log(res.data);
+  //     });
+  // };
 
-  if (session.status === "authenticated" && token == "") {
-    setToken(session.data.accessToken);
-    fetch();
-  }
+  // if (session.status === "authenticated" && token == "") {
+  //   setToken(session.data.accessToken);
+  //   fetch();
+  // }
 
   const handleShowMember = async (groupId, index) => {
     if (showMember != index + 1) {

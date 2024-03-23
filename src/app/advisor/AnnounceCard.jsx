@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
 const AnnounceCard = (props) => {
+
     const session = useSession()
     const router = useRouter()
 
@@ -13,36 +14,18 @@ const AnnounceCard = (props) => {
 
     useEffect(() => {
         const fetchPost = async (token) => {
-            let announce
-            let assignment
-            if (props.subject) {
-                announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/subject/${props.subject}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }).then((res) => res.data)
-                assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/subject/${props.subject}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }).then((res) => res.data)
-            } else {
-                announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }).then((res) => res.data)
-                assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }).then((res) => res.data)
-            }
-            
+            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.data)
+            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.data)
             if (props.type == 'Assignment') {
                 setAnnounceData([...assignment])
             } else if (props.type == 'Announcement') {
@@ -55,13 +38,13 @@ const AnnounceCard = (props) => {
             setToken(session.data.accessToken)
             fetchPost(session.data.accessToken)
         }
-    },[props.type,session,props.subject])
+    },[props.type,session])
 
     const handleRouter = (data) => {
         if (data.dueAt) {
-            router.push(`proctor/assignment/${data.id}`)
+            router.push(`advisor/assignment/${data.id}`)
         } else {
-            router.push(`proctor/announcement/${data.id}`)
+            router.push(`advisor/announcement/${data.id}`)
         }
     }
     
