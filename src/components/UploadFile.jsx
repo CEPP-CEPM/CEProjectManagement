@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 
-const UploadFile = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+const UploadFile = (props) => {
 
   const hiddenFileInput = useRef(null);
 
@@ -11,12 +10,8 @@ const UploadFile = () => {
   };
 
   const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    handleFile(fileUploaded);
-  };
-
-  const handleFile = (file) => {
-    console.log(file);
+    const fileUploaded = event.target.files;
+    props.setFiles(Array.from(fileUploaded))
   };
 
   return (
@@ -31,6 +26,9 @@ const UploadFile = () => {
         ref={hiddenFileInput}
         style={{ display: "none" }}
       />
+      {props.files && props.files.map((f) => {
+        return <div className="">{f.name}</div>;
+      })}
     </div>
   );
 };

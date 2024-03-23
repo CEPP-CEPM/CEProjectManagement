@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import SigninButton from './SigninButton';
 
 const Navbar = () => {
   return (
@@ -131,7 +132,7 @@ const Navbar = () => {
             </details>
           </li>
           <li>
-            <a>Item 3</a>
+            <SigninButton />
           </li>
         </ul>
       </div>

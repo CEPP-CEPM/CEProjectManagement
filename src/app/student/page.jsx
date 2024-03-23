@@ -23,7 +23,7 @@ const Student = () => {
                     <div>หัวข้อ</div>
                     <div className="hidden md:block">วันที่ประกาศ</div>
                 </div>
-                <AnnounceCard setDatacount={setDatacount} page={page}/>
+                <AnnounceCard setDatacount={setDatacount} page={page} type={type}/>
             </div>
             <Paginate datacount={Math.ceil(datacount/10)} page={page} setPage={setPage}/>
         </div>
