@@ -11,11 +11,11 @@ export default withAuth(function middleware(request) {
     }else if(role == "ADVISOR" && !request.nextUrl.pathname.startsWith('/advisor')){
         return NextResponse.redirect("http://localhost:3000/advisor")
 
-    // //     return NextResponse.rewrite(new URL('/advisor', request.url));
-    }else if(role == "PROCTOR" && !request.nextUrl.pathname.startsWith('/proctor')){
-        return NextResponse.redirect("http://localhost:3000/proctor")
-    // //     return NextResponse.rewrite(new URL('/proctor', request.url));
-    }
+    // // //     return NextResponse.rewrite(new URL('/advisor', request.url));
+    // }else if(role == "PROCTOR" && !request.nextUrl.pathname.startsWith('/proctor')){
+    //     return NextResponse.redirect("http://localhost:3000/proctor")
+    // // //     return NextResponse.rewrite(new URL('/proctor', request.url));
+    // }
     // const url = request.nextUrl.clone()
     // url.pathname = '/student'
     // console.log(request.nextUrl.pathname !== "/student");

@@ -70,13 +70,13 @@ const Group = () => {
     <div className="flex flex-col items-center">
       <div>
         <div className="text-KMITL font-bold text-[40px] my-10">My Group</div>
-        <div className="w-[500px] bg-[#F5F3F3] shadow-lg rounded-lg px-5 py-3">
-          <div>หัวข้อโครงงาน : {group?.topic}</div>
+        {group?  <div className="w-[500px] bg-[#F5F3F3] shadow-lg rounded-lg px-5 py-3">
+          <div>หัวข้อโครงงาน : {group.topic}</div>
           <div>
-            อาจารย์ที่ปรึกษา : {group?.Users.name} {group?.Users.lastname}
+            อาจารย์ที่ปรึกษา : {group.Users.name} {group?.Users.lastname}
           </div>
           <div>รายชื่อสมาชิก : </div>
-          {group?.UserGroups.map((member) => {
+          {group.UserGroups.map((member) => {
             return (
               <div key={member.id}>
                 {member.Users.name} {member.Users.lastname}
@@ -93,7 +93,8 @@ const Group = () => {
               </button>
             </div>
           )}
-        </div>
+        </div>: ''}
+       
       </div>
     </div>
   );
