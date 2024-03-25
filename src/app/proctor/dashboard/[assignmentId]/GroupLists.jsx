@@ -24,7 +24,6 @@ const GroupLists = ({ id }) => {
   }, []);
 
   const handleShowMember = async (groupId, index) => {
-    console.log(groupId);
     if (showMember != index + 1) {
       setShowMember(index + 1);
     } else {

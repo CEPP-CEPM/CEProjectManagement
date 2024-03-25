@@ -25,7 +25,7 @@ const Student = () => {
                     <CreateSubject />
                     <DeleteSubject />
                     <SelectSubject subject={subject} setSubject={setSubject}/>
-                    <AddUser /> 
+                    <AddUser subject={subject}/> 
                 </div>
                 <div className="flex">
                     <CreatePost subject={subject}/>

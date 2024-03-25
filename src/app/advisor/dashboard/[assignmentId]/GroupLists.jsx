@@ -14,6 +14,7 @@ const GroupLists = ({ assignId }) => {
   const [token, setToken] = useState("");
   const [showMember, setShowMember] = useState();
   const [students, setStudents] = useState();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -33,7 +34,7 @@ const GroupLists = ({ assignId }) => {
       setToken(session.data.accessToken);
       fetch();
     }
-  }, [session.status]);
+  }, [session.status, refresh]);
 
   // const fetch = async () => {
   //   const groupSubmit = await axios
@@ -63,7 +64,9 @@ const GroupLists = ({ assignId }) => {
       setShowMember(0);
     }
     await axios
-      .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/${groupId}`)
+      .get(
+        `${process.env.NEXT_PUBLIC_ENDPOINT}/group/proctor/student/${groupId}`
+      )
       .then((res) => {
         setStudents(res.data);
         // console.log(res.data)
@@ -87,7 +90,11 @@ const GroupLists = ({ assignId }) => {
               Authorization: `Bearer ${token}`,
             },
           }
-        );
+        ).then(res => {
+          if(res.status === 200){
+            setRefresh(!refresh)
+          }
+        })
         Swal.fire("Reject!", "", "success");
       }
     });
@@ -104,12 +111,19 @@ const GroupLists = ({ assignId }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axios.patch(
-          `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignSubmitId}`, {}, {headers:{Authorization: `Bearer ${token}`}}
-        );
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignSubmitId}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        ).then(res => {
+          if (res.status === 200) {
+            setRefresh(!refresh)
+          }
+        })
         Swal.fire("Accept!", "", "success");
       }
     });
   };
+  console.log(data);
 
   return (
     <div>
@@ -123,18 +137,25 @@ const GroupLists = ({ assignId }) => {
                   <div className="text-[18px]">{data.Groups.topic}</div>
                 </div>
                 <div className="flex pr-4 mt-3 md:">
-                  <button
-                    className="mr-4 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800"
-                    onClick={() => handleReject(data.id)}
-                  >
-                    Reject
-                  </button>
-                  <button
+                  {data.status != "APPROVE" ? (
+                    <div className="flex">
+                      <button
+                      className="mr-4 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800"
+                      onClick={() => handleReject(data.id)}
+                    >
+                      Reject
+                    </button>
+                      <button
                     className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-800"
                     onClick={() => handleAccept(data.id)}
                   >
                     Accept
                   </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  
                   <label className="px-2 swap swap-rotate">
                     <input
                       type="checkbox"
@@ -153,10 +174,11 @@ const GroupLists = ({ assignId }) => {
                     สมาชิกกลุ่ม:
                     <ul className="ml-10">
                       {students &&
-                        students.map((student) => {
+                        students.UserGroups.map((student) => {
                           return (
                             <li key={student.id}>
-                              {student.name} {student.lastname} รหัสนักศึกษา
+                              {student.Users.name} {student.Users.lastname}{" "}
+                              รหัสนักศึกษา
                             </li>
                           );
                         })}

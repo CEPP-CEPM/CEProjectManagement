@@ -1,7 +1,14 @@
+'use client'
 import Image from 'next/image'
 import SigninButton from './SigninButton';
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
+
+  const session = useSession()
+  const [token, setToken] = useState()
+
   return (
     <div className="navbar bg-[#3E3D42] border-b-4 border-KMITL shadow-lg px-[50px] h-[54px] sticky top-0">
       <div className="navbar-start">

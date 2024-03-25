@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2'
 import { useSession } from "next-auth/react";
+import CreatePost from "../../CreatePost";
 
 const Announcement = ({ params }) => {
 
@@ -12,7 +13,7 @@ const Announcement = ({ params }) => {
     const router = useRouter()
 
     const [data, setData] = useState()
-    const [files, setFiles] = useState()
+    const [edit, setEdit] = useState(true)
 
     useEffect(() => {
         const fetch = async (token) => {
@@ -26,7 +27,8 @@ const Announcement = ({ params }) => {
         if (session.status === "authenticated") {
             fetch(session.data.accessToken)
         }
-    }, [session])
+        setEdit(true)
+    }, [session, edit])
 
     const handleDelete = async () => {
         Swal.fire({
@@ -57,6 +59,7 @@ const Announcement = ({ params }) => {
                 <>
                     <Detail data={data} type='announcement'/>
                     <div className="flex justify-end">
+                    <CreatePost edit={edit} setEdit={setEdit} title={data[0].title} description={data[0].description} type={1} announcementId={params.id}/>
                         <button className="mr-7 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800"
                                 onClick={() => handleDelete()}>
                                     Delete

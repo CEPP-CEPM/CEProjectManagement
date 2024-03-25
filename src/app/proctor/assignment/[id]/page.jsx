@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import CreatePost from "../../CreatePost";
 import Swal from 'sweetalert2'
 
 const Assignment = ({ params }) => {
@@ -12,6 +13,7 @@ const Assignment = ({ params }) => {
     const router = useRouter()
 
     const [data, setData] = useState()
+    const [edit, setEdit] = useState(true)
 
     useEffect(() => {
         const fetch = async (token) => {
@@ -20,13 +22,15 @@ const Assignment = ({ params }) => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then((res) => res.data)
-            setData(assign)
+            }).then((res) => {
+                setData(res.data)
+            })
         }
         if (session.status === "authenticated") {
             fetch(session.data.accessToken)
         }
-    }, [session])
+        setEdit(true)
+    }, [session,edit])
 
     const handleDelete = async () => {
         Swal.fire({
@@ -51,14 +55,13 @@ const Assignment = ({ params }) => {
         });
     }
 
-    console.log(data);
-
     return (
         <>
             {data && 
             <>
                 <Detail data={data} type='Assignment'/>
                 <div className="flex justify-end">
+                    <CreatePost edit={edit} setEdit={setEdit} title={data[0].title} description={data[0].description} dueAt={data[0].dueAt} type={0} assignmentId={params.id}/>
                     <button className="mr-7 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-800"
                             onClick={() => handleDelete()}>
                                 Delete

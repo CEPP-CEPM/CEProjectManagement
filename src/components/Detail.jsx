@@ -39,7 +39,7 @@ const Detail = (props) =>{
             })
             }
             {props.data[0].AssignmentFiles?.map((file)=>{
-                return <ShowFile file={file}/>
+                return <ShowFile file={file} key={file.id}/>
             })
             }
         </div>

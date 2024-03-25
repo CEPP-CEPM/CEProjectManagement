@@ -22,6 +22,7 @@ const CreatePost = (props) => {
     const [detail, setDetail] = useState('');
     const [files, setFiles] = useState([])
     const [submit, setSubmit] = useState(false)
+    const [showduedate, setShowduedate] = useState('')
 
     const date = new Date();
 
@@ -49,33 +50,68 @@ const CreatePost = (props) => {
         const formdata = new FormData()
         formdata.append('title', topic)
         formdata.append('description', detail)
-        formdata.append('subjectName', props.subject)
-        for (let i = 0; i < files.length; i++) {
-            formdata.append('files',files[i])
+        if (!props.edit) {
+            formdata.append('subjectName', props.subject)
+        }
+        if(files.length > 0){
+            console.log("test");
+            for (let i = 0; i < files.length; i++) {
+                formdata.append('files',files[i])
+            }
         }
         if (type == 1) {
             // Announcement
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`, formdata,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
+
+            if (props.edit) {
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/${props.announcementId}`, formdata,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    },
+                ).then(res => {
+                    if (res.status === 200) {
+                        props.setEdit(false)
                     }
-                },
-            )
+                })
+            } else {
+                await axios.post(
+                    `${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`, formdata,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    },
+                )
+            }
         } else if (type == 0) {
             // Assignment
-            console.log(dueDate);
+            
             formdata.append('dueAt',dueDate)
-            console.log(token);
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`, formdata,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
+            if (props.edit) {
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${props.assignmentId}`, formdata,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    },
+                ).then(res => {
+                    if (res.status === 200) {
+                        props.setEdit(false)
                     }
-                },
-            )
+                })
+            } else {
+                await axios.post(
+                    `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`, formdata,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    },
+                )
+            }
         }
         handleClose()
     }
@@ -84,12 +120,31 @@ const CreatePost = (props) => {
         if (session.status === "authenticated") {
             setToken(session.data.accessToken)
         }
+        if (props) {
+            if (props.type === 0 || 1) {
+                setType(props.type)
+            }
+            if (props.title) {
+                setTopic(props.title)
+            }
+            if (props.dueAt) {
+                let due = new Date(props.dueAt.slice(0,10))
+                setDueDate(due.toISOString())
+                setShowduedate(due.toISOString().split('T')[0])
+                console.log(5,due)
+            }
+            if (props.description) {
+                setDetail(props.description)
+            }
+            // if (props.file) {
+            //     setFiles(props.files)
+            // }
+        }
     }, [session,token])
-
     return (
         <div className=''>
             <button className="border-[#BDBEC2] border-[1px] py-2 text-[#BDBEC2] rounded-md w-[45px] hover:bg-[#BDBEC2] hover:text-white mr-3"
-                    onClick={handleOpen}>+</button>
+                    onClick={handleOpen}>{props.edit != null ? 'Edit' : '+'}</button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -102,8 +157,10 @@ const CreatePost = (props) => {
                     },
                 }}>
                 <Fade in={open}>
-                    <div className='bg-white left-[12.5%] md:left-[25%] top-[5%] absolute w-[75%] md:w-[50%] h-[90%] rounded-md px-[2.5%] py-[2.5%]'>
+                    <div className='bg-white left-[12.5%] md:left-[25%] top-[5%] absolute w-[75%] md:w-[50%] rounded-md px-[2.5%] py-[2.5%]'>
                         {/* type */}
+                        { props.edit ? 
+                            null: 
                         <div className='flex mb-[15px]'>
                             <button
                             className={`createPost_postForm_typeButton rounded-l-[6px]
@@ -129,7 +186,7 @@ const CreatePost = (props) => {
                             >
                             Assignment
                             </button>
-                        </div>
+                        </div>}
 
                         {/* Topic */}
                         <div className='mb-[10px]'>
@@ -156,6 +213,7 @@ const CreatePost = (props) => {
                                     name='dueDate'
                                     min={`${currentDate}`}
                                     className={`rounded-[6px] border-[1px] ${submit && (dueDate==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'} border-[#BDBEC2] px-3 py-1 text-[12px] text-[#BDBEC2]`}
+                                    defaultValue={showduedate}
                                     onChange={(e) => {
                                         let dueAt = new Date(e.target.value)
                                         dueAt.setDate(dueAt.getDate() + 1)
@@ -173,7 +231,8 @@ const CreatePost = (props) => {
                         <div className='mb-[10px]'>
                             <h2 className='text-[15px] font-bold text-[#545F71] mb-2'>รายละเอียด</h2>
                             <textarea name="" id="" cols="" rows="7" spellCheck='true' className={` w-full resize-none ${submit && (detail==='') ? 'border-red-600 border-[2px]' : 'border-[#BDBEC2] border-[1px]'} rounded-[6px] px-2 py-2 outline-none`}
-                                    onChange={(e) => setDetail(e.target.value)}></textarea>
+                                    onChange={(e) => setDetail(e.target.value)}
+                                    value={detail}></textarea>
                         </div>
 
                         {/* send file */}

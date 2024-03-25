@@ -28,9 +28,12 @@ const UploadFile = (props) => {
 
   return (
     <div className="px-10">
+      <div>
       <button className="button-upload" onClick={handleClick}>
         + Add file
       </button>
+      <label className="text-red-500"> {props.typefile}</label>
+      </div>
       <input
         type="file"
         multiple
