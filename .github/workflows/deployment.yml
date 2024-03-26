@@ -54,6 +54,9 @@ jobs:
       - name: Checkout ✔️
         uses: actions/checkout@v3
 
+      - name: Pull Latest Image
+        run: docker pull bxdman/ceprojectmanagement:latest
+
       - name: Build the docker-compose stack
         run: docker compose up -d --build
          
