@@ -4,7 +4,7 @@ import UploadFile from "@/components/UploadFile";
 import axios from "axios";
 import BtnSubmit from "./BtnSubmit";
 import BtnCancel from "./BtnCancel";
-import ShowFileSubmit from "./ShowfileSubmit";
+import ShowFile from "@/components/ShowFile";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import BtnApprove from "./BtnApprove";
@@ -132,7 +132,7 @@ const Assignment = ({ params }) => {
             <div className="px-7">
               {assignmentSubmit.AssignmentSubmitFiles &&
                 assignmentSubmit.AssignmentSubmitFiles.map((f) => {
-                  return <ShowFileSubmit files={f} key={f.id} />;
+                  return <ShowFile file={f} key={f.id} />;
                 })}
               {assignmentSubmit.status == "APPROVE" ? (
                 <BtnApprove />

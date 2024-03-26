@@ -12,7 +12,6 @@ const Detail = (props) =>{
         dueAt.setHours(dueAt.getHours()-7)
         dueAt = dueAt.toString().slice(0,25)
     }
-    console.log(props);
 
     return(
         <div className=" p-7">

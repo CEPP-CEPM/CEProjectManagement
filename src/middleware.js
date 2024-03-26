@@ -31,4 +31,4 @@ export default withAuth(function middleware(request) {
   
 });
 
-export const config = { matcher: ['/proctor/:path*', '/student/:path*','/advisor/:path*'] };
+export const config = { matcher: ['/proctor/:path*', '/student/:path*','/advisor/:path*','/:path*'] };

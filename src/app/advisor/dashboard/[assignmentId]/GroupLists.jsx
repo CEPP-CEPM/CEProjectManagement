@@ -36,27 +36,6 @@ const GroupLists = ({ assignId }) => {
     }
   }, [session.status, refresh]);
 
-  // const fetch = async () => {
-  //   const groupSubmit = await axios
-  //     .get(
-  //       `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/advisor/${assignId}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${session.data.accessToken}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       setData(res.data);
-  //       console.log(res.data);
-  //     });
-  // };
-
-  // if (session.status === "authenticated" && token == "") {
-  //   setToken(session.data.accessToken);
-  //   fetch();
-  // }
-
   const handleShowMember = async (groupId, index) => {
     if (showMember != index + 1) {
       setShowMember(index + 1);
@@ -69,7 +48,6 @@ const GroupLists = ({ assignId }) => {
       )
       .then((res) => {
         setStudents(res.data);
-        // console.log(res.data)
       });
   };
 
@@ -123,7 +101,6 @@ const GroupLists = ({ assignId }) => {
       }
     });
   };
-  console.log(data);
 
   return (
     <div>

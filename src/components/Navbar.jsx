@@ -1,13 +1,9 @@
-'use client'
 import Image from 'next/image'
 import SigninButton from './SigninButton';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-const Navbar = () => {
-
-  const session = useSession()
-  const [token, setToken] = useState()
+const Navbar = (props) => {
 
   return (
     <div className="navbar bg-[#3E3D42] border-b-4 border-KMITL shadow-lg px-[50px] h-[54px] sticky top-0">
@@ -47,7 +43,7 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content sticky -right-[50px] mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-screen"
           >
             <li>
-              <a>Announcement</a>
+              <a>Announcements</a>
             </li>
             <li>
               <a>Hall of Frame</a>
@@ -92,51 +88,21 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+
+        {/* PC */}
         <ul className="menu menu-horizontal px-1 flex-nowrap hidden lg:flex text-white">
           <li>
-            <a>Announcement</a>
+            <a href='https://www.ce.kmitl.ac.th/'>CE Website</a>
           </li>
           <li>
-            <a>Hall of Frame</a>
+            <a href={`${process.env.NEXTAUTH_URL}/${props.role}`}>Home</a>
           </li>
+          { props.role != 'student' ?
+            <li>
+              <a href={`${process.env.NEXTAUTH_URL}/${props.role}/dashboard`}>Dashboard</a>
+            </li> : null}
           <li>
-            <details>
-              <summary>Student</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <details>
-              <summary>Faculty</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <details>
-              <summary>About Us</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
+            <a href={`${process.env.NEXTAUTH_URL}/${props.role}/group`}>Group</a>
           </li>
           <li>
             <SigninButton />
