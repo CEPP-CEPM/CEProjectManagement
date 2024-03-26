@@ -10,5 +10,6 @@ services:
       - NEXT_PUBLIC_ENDPOINT
       - NEXTAUTH_SECRET
       - MINIO_ENDPOINT
+    restart: always
     ports:
       - "3000:3000"
