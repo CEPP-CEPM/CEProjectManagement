@@ -8,7 +8,7 @@ import axios from 'axios'
 //icon
 import { IoIosArrowBack } from "react-icons/io";
 
-const page = ({params}) => {
+const Page = ({params}) => {
 
     const router = useRouter()
     const session = useSession()
@@ -43,4 +43,4 @@ const page = ({params}) => {
     )
 }
 
-export default page
+export default Page

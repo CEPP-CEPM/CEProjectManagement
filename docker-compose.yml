@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    container_name: projectManagementFrontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - NEXTAUTH_URL
+      - NEXT_PUBLIC_ENDPOINT
+      - NEXTAUTH_SECRET
+      - MINIO_ENDPOINT
+    ports:
+      - "3000:3000"

@@ -46,7 +46,7 @@ const ShowGroup = () => {
       {data &&
         data.map((d, index) => {
           return (
-            <div>
+            <div key={index}>
               <div
                 className="bg-KMITL text-white px-5 py-3 rounded-md"
                 onClick={() => handleShowMember(d.id, index)}

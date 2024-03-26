@@ -3,7 +3,7 @@ import { useState} from "react"
 import AssignmentList from "./AssignmentList"
 import SelectSubject from "@/app/proctor/SelectSubject"
 
-const page = () => {
+const Page = () => {
 
     const [subject, setSubject] = useState(null)
 
@@ -16,4 +16,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
