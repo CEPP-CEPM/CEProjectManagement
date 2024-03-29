@@ -48,7 +48,7 @@ const AssignmentCard = (props) => {
                   <MdOutlineAssignment className=" text-[#BDBEC2] w-10 h-10 md:w-14 md:h-14 px-1 text-[25px] border-[3px] rounded-full mx-3" />
                   <div className="text-[18px]">{data.title}</div>
                 </div>
-                <div className="text-[14px]">{data.createAt?.slice(0, 10)}</div>
+                <div className="text-[14px]">{data.createAt.slice(0, 10)}</div>
               </button>
             </div>
             <hr />
