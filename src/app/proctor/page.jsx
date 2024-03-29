@@ -17,9 +17,10 @@ const Student = () => {
     //paginate
     const [datacount, setDatacount] = useState(2)
     const [page, setPage] = useState(1);
-
+    console.log(process.env.NEXT_PUBLIC_ENDPOINT)
     return (
         <div className="px-7 md:px-40 py-6">
+            
             <div className="flex justify-between items-center mb-6 mt-1">
                 <div className="flex">
                     <CreateSubject />
