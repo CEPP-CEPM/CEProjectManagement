@@ -96,14 +96,14 @@ const Navbar = (props) => {
             <a href='https://www.ce.kmitl.ac.th/'>CE Website</a>
           </li>
           <li>
-            <a href={`${process.env.NEXTAUTH_URL}/${props.role}`}>Home</a>
+            <a href={`${process.env.NEXT_PUBLIC_URL}/${props.role}`}>Home</a>
           </li>
           { props.role != 'student' ?
             <li>
-              <a href={`${process.env.NEXTAUTH_URL}/${props.role}/dashboard`}>Dashboard</a>
+              <a href={`${process.env.NEXT_PUBLIC_URL}/${props.role}/dashboard`}>Dashboard</a>
             </li> : null}
           <li>
-            <a href={`${process.env.NEXTAUTH_URL}/${props.role}/group`}>Group</a>
+            <a href={`${process.env.NEXT_PUBLIC_URL}/${props.role}/group`}>Group</a>
           </li>
           <li>
             <SigninButton />
