@@ -13,10 +13,13 @@ const CreatePost = (props) => {
     const [token, setToken] = useState()
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        setOpen(true)
+        setType(0)
+    };
     const handleClose = () => setOpen(false);
 
-    const [type, setType] = useState(true);
+    const [type, setType] = useState();
     const [topic, setTopic] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [detail, setDetail] = useState('');
@@ -87,7 +90,7 @@ const CreatePost = (props) => {
             }
         } else if (type == 0) {
             // Assignment
-            
+            console.log('hey');
             formdata.append('dueAt',dueDate)
             if (props.edit) {
                 await axios.put(
@@ -141,6 +144,8 @@ const CreatePost = (props) => {
             // }
         }
     }, [session,token])
+
+    console.log(type);
     
     return (
         <div className=''>
