@@ -48,13 +48,13 @@ const AnnounceCard = (props) => {
         }
     }
     
-    const display = announceData.slice(10*(props.page-1), 10*props.page)
+    const display = announceData?.slice(10*(props.page-1), 10*props.page)
     props.setDatacount(announceData.length)
 
     return (
         <div>
             {display.map((data) => {
-                let date = new Date(data.createAt.slice(0, 19))
+                let date = new Date(data.createAt?.slice(0, 19))
                 if (date.getHours() > 16) {
                     date.setDate(date.getDate()+1)
                 }

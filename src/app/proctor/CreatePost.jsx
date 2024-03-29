@@ -128,7 +128,7 @@ const CreatePost = (props) => {
                 setTopic(props.title)
             }
             if (props.dueAt) {
-                let due = new Date(props.dueAt.slice(0,10))
+                let due = new Date(props.dueAt?.slice(0,10))
                 setDueDate(due.toISOString())
                 setShowduedate(due.toISOString().split('T')[0])
                 console.log(5,due)

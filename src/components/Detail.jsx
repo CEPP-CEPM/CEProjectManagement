@@ -10,7 +10,7 @@ const Detail = (props) => {
   if (props.data[0].dueAt) {
     dueAt = new Date(props.data[0].dueAt);
     dueAt.setHours(dueAt.getHours() - 7);
-    dueAt = dueAt.toString().slice(0, 25);
+    dueAt = dueAt?.toString().slice(0, 25);
   }
 
   return (
