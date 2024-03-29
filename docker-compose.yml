@@ -10,6 +10,6 @@ services:
       - NEXTAUTH_URL
       - NEXT_PUBLIC_ENDPOINT
       - NEXTAUTH_SECRET
-      - MINIO_ENDPOINT
+      - NEXT_PUBLIC_MINIO_ENDPOINT
     restart: always
     network_mode: host
