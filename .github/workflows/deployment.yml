@@ -5,15 +5,6 @@ on:
   push:
     branches: ["main"]
 
-env:
-  ENV_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-  ENV_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-  ENV_NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
-  ENV_NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-  ENV_NEXT_PUBLIC_ENDPOINT: ${{ secrets.NEXT_PUBLIC_ENDPOINT }}
-  ENV_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-  ENV_NEXT_PUBLIC_MINIO_ENDPOINT: ${{ secrets.NEXT_PUBLIC_MINIO_ENDPOINT }}
-
 jobs:
   lintTest:
     name: Lint
