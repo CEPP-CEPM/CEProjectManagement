@@ -6,13 +6,13 @@ on:
     branches: ["main"]
 
 env:
-  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-  NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
-  NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-  NEXT_PUBLIC_ENDPOINT: ${{ secrets.NEXT_PUBLIC_ENDPOINT }}
-  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-  NEXT_PUBLIC_MINIO_ENDPOINT: ${{ secrets.NEXT_PUBLIC_MINIO_ENDPOINT }}
+  ENV_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+  ENV_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  ENV_NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
+  ENV_NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+  ENV_NEXT_PUBLIC_ENDPOINT: ${{ secrets.NEXT_PUBLIC_ENDPOINT }}
+  ENV_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  ENV_NEXT_PUBLIC_MINIO_ENDPOINT: ${{ secrets.NEXT_PUBLIC_MINIO_ENDPOINT }}
 
 jobs:
   lintTest:
@@ -53,14 +53,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ceprojectmanagement:latest
-          secrets: |
-            "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
-            "GOOGLE_CLIENT_SECRET=${{ env.GOOGLE_CLIENT_SECRET }}"
-            "NEXT_PUBLIC_URL=${{ env.NEXT_PUBLIC_URL }}"
-            "NEXTAUTH_URL=${{ env.NEXTAUTH_URL }}"
-            "NEXT_PUBLIC_ENDPOINT=${{ env.NEXT_PUBLIC_ENDPOINT }}"
-            "NEXTAUTH_SECRET=${{ env.NEXTAUTH_SECRET }}"
-            "NEXT_PUBLIC_MINIO_ENDPOINT=${{ env.NEXT_PUBLIC_MINIO_ENDPOINT }}"
 
   # Build job
   build:
