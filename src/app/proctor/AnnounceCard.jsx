@@ -71,7 +71,7 @@ const AnnounceCard = (props) => {
     return (
         <div>
             {display?.map((data) => {
-                let date = new Date(data.createAt.slice(0, 19))
+                let date = new Date(data.createAt?.slice(0, 19))
                 if (date.getHours() > 16) {
                     date.setDate(date.getDate()+1)
                 }
