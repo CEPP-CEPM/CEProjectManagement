@@ -13,7 +13,7 @@ export default withAuth(function middleware(request) {
 
     // // //     return NextResponse.rewrite(new URL('/advisor', request.url));
     }else if(role == "PROCTOR" && !request.nextUrl.pathname.startsWith('/proctor')){
-        return NextResponse.redirect(`${process.env.NEXTAUTH_URL}}/proctor`)
+        return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/proctor`)
     // //     return NextResponse.rewrite(new URL('/proctor', request.url));
     }
     // const url = request.nextUrl.clone()
