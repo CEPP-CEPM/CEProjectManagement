@@ -37,7 +37,10 @@ const AnnounceCard = (props) => {
             } else if (props.type == 'Announcement') {
                 setAnnounceData([...announce])
             } else {
-                setAnnounceData([...announce, ...assignment])
+                const data = [...announce, ...assignment].sort((a, b) => {
+                    return (a.createAt < b.createAt) ? 1 : ((a.createAt > b.createAt) ? -1 : 0);
+                });
+                setAnnounceData(data)
             }
         }
         if (session.status === "authenticated") {
