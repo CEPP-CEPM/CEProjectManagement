@@ -118,7 +118,9 @@ const BtnAddGroup = () => {
                     );
                   })}
                 </div>
-                <input type="submit" />
+                <button className="btn " type="submit">
+                  Add Group
+                </button>
               </div>
             </form>
           </div>
