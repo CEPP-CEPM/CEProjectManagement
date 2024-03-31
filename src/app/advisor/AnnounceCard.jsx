@@ -13,14 +13,20 @@ const AnnounceCard = (props) => {
     const [token, setToken] = useState("");
 
     useEffect(() => {
-        const fetchPost = async (token) => {
-            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement`,
+        const fetchPost = async (token, subjectId) => {
+            const subject = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/subjects/${subjectId}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             }).then((res) => res.data)
-            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment`,
+            const announce = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/subject/${subject.subjectName}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.data)
+            const assignment = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/subject/${subject.subjectName}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -36,7 +42,7 @@ const AnnounceCard = (props) => {
         }
         if (session.status === "authenticated") {
             setToken(session.data.accessToken)
-            fetchPost(session.data.accessToken)
+            fetchPost(session.data.accessToken, session.data.user.subjectId)
         }
     },[props.type,session])
 

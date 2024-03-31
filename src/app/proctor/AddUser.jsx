@@ -8,7 +8,11 @@ import axios from 'axios'
 const AddUser = (props) => {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        if (props.subject) {
+            setOpen(true)
+        }
+    };
     const handleClose = () => setOpen(false);
 
     const [files, setFiles] = useState([])

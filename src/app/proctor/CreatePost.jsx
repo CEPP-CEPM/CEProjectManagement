@@ -14,8 +14,10 @@ const CreatePost = (props) => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
-        setOpen(true)
-        setType(0)
+        if (props.subject) {
+            setOpen(true)
+            setType(0)
+        }
     };
     const handleClose = () => setOpen(false);
 
