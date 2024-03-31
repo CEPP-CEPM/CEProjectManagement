@@ -6,15 +6,22 @@ import axios from 'axios';
 const ShowGroup = ({groupData}) => {
 
   const [show, setShow] = useState(null);
-  const [member, setMember] = useState(null);
-
-  const showMember = async (index,groupId) =>{
-    setShow(index)
-    const resMember = await axios
-        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/student/${groupId}`)
-        .then((res) => res.data);
-      setMember(resMember);
-  }
+  const [member, setMember] = useState();
+  const showMember = async (groupId, index) => {
+    console.log(groupId);
+    if (show != index + 1) {
+      setShow(index + 1);
+    } else {
+      setShow(0);
+    }
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_ENDPOINT}/group/proctor/student/${groupId}`
+      )
+      .then((res) => {
+        setMember(res.data);
+      });
+    };
 
   return (
     <div className='flex flex-col gap-5 w-[500px] h-[400px]'>
@@ -23,20 +30,28 @@ const ShowGroup = ({groupData}) => {
           return (
             <div key={d.id}>
               <div
-                className="bg-KMITL text-white px-5 py-3"
-                onClick={() => showMember(index,d.id)}
+                className="bg-KMITL text-white px-5 py-3 rounded-md"
+                onClick={() => showMember(d.id,index)}
               >
                 {d.topic}
               </div>
               <div
                 className={`${
-                  show == index ? "" : "hidden"
-                } px-5 py-3 bg-[#F5F5F5]`}
+                  show == index +1 ? "" : "hidden"
+                } px-5 py-3 bg-[#F5F5F5] rounded-b-md`}
               >
                 <div>สมาชิก</div>
-                {member ? member.map((m) =>{
-                  return <div key={m.id}>64011109 {m.name} {m.lastname}</div>
-                }) : <div>555</div>}
+                <ul className="ml-10">
+                  {member &&
+                    member.UserGroups.map((student) => {
+                      return (
+                        <li key={student.id}>
+                          {student.Users.name} {student.Users.lastname}{" "}
+                          รหัสนักศึกษา
+                        </li>
+                      );
+                    })}
+                </ul>
               </div>
             </div>
           );
