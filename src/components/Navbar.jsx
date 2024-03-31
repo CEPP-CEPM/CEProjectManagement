@@ -1,7 +1,5 @@
 import Image from 'next/image'
 import SigninButton from './SigninButton';
-// import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 
 const Navbar = (props) => {
 

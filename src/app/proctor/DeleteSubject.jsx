@@ -23,11 +23,6 @@ const DeleteSubject = () => {
 
     const fetch = async () => {
         const allSubject = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/subjects`,
-            // {
-            //     headers: {
-            //         Authorization: `Bearer ${token}`,
-            //     }
-            // },
         ).then((res) => res.data)
         setSubject([...allSubject])
     } 
@@ -41,10 +36,6 @@ const DeleteSubject = () => {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        // if (session.status === "authenticated") {
-        //     setToken(session.data.accessToken)
-        //     fetchPost(session.data.accessToken)
-        // }
         fetch()
     }, [])
 
@@ -76,7 +67,6 @@ const DeleteSubject = () => {
                                                 onClick={() => {
                                                     setDisableButton(false)
                                                     {data.id === deleteSubject ? setDeleteSubject(null) : setDeleteSubject(data.id)}
-                                                    console.log(deleteSubject);
                                                 }}>
                                             {data.subjectName}
                                         </button>

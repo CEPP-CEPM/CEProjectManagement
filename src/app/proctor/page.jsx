@@ -17,7 +17,6 @@ const Student = () => {
     //paginate
     const [datacount, setDatacount] = useState(2)
     const [page, setPage] = useState(1);
-    console.log(`endpoint : ${process.env.NEXT_PUBLIC_ENDPOINT}`)
     return (
         <div className="px-7 md:px-40 py-6">
             

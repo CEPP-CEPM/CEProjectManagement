@@ -17,7 +17,6 @@ const Group = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setGroup(res.data);
       });
 
@@ -28,7 +27,6 @@ const Group = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setCheckJoin(res.data);
       });
   };
@@ -63,7 +61,6 @@ const Group = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => console.log(res.data));
   };
 
   return (

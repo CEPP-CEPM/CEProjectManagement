@@ -32,7 +32,6 @@ const AssignmentCard = (props) => {
     }
   }, [session, props.subject]);
 
-  console.log(assignment);
 
   return (
     <div>

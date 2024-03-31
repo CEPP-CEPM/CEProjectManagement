@@ -32,8 +32,6 @@ const AssignmentCard = (props) => {
     }
   }, [session, props.subject]);
 
-  console.log(assignment);
-
   return (
     <div>
       {assignment.length > 0 && assignment.map((data) => {

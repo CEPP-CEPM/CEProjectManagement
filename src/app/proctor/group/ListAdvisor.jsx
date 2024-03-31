@@ -15,16 +15,16 @@ const ListGroup = () => {
     };
     fetch();
   }, []);
-  //   console.log(data);
 
   return (
     <div className="flex flex-col py-5 gap-3 items-center">
+      <p className="p-[20px] text-[30px] font-bold">List Advisor</p>
       {data ? (
         data.map((d) => {
           return (
             <div
               key={d.id}
-              className="bg-KMITL text-[20px] text-white px-5 rounded-md py-3"
+              className="bg-KMITL text-[20px] text-white px-5 rounded-md py-3 w-[25%]"
             >
               <Link href={`group/advisor/${d.id}`}>
                 {d.name} {d.lastname}

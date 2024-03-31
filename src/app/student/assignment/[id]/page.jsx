@@ -47,33 +47,6 @@ const Assignment = ({ params }) => {
     }
   }, [session]);
 
-  // const fetch = async () => {
-  //   console.log(session.data.accessToken);
-  //   const assign = await axios
-  //     .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/assignment/${params.id}`)
-  //     .then((res) => res.data);
-  //   setData(assign);
-  //   const assignsubmit = await axios
-  //     .get(
-  //       `${process.env.NEXT_PUBLIC_ENDPOINT}/assignment-submit/student/${params.id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${session.data.accessToken}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       setAssignmentSubmit(res.data);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   if (session.status === "authenticated") {
-  //     setToken(session.data.accessToken);
-  //     fetch();
-  //   }
-  // }, [session.status]);
-
   const submitassign = async () => {
     const formdata = new FormData();
     formdata.append("assignmentId", params.id);
@@ -120,7 +93,6 @@ const Assignment = ({ params }) => {
         });
     } catch (error) {}
   };
-  // console.log(data);
 
   return (
     <>

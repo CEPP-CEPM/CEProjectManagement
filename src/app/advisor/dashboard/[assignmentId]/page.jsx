@@ -28,8 +28,6 @@ const Page = ({params}) => {
         }
     }, [session])
 
-    console.log(assignment);
-
     return (
         <div className="px-7 md:px-24 lg:px-40 py-6">
             <div className="flex items-center">

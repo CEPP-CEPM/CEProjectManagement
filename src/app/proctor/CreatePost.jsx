@@ -57,7 +57,6 @@ const CreatePost = (props) => {
             formdata.append('subjectName', props.subject)
         }
         if(files.length > 0){
-            console.log("test");
             for (let i = 0; i < files.length; i++) {
                 formdata.append('files',files[i])
             }
@@ -90,7 +89,6 @@ const CreatePost = (props) => {
             }
         } else if (type == 0) {
             // Assignment
-            console.log('hey');
             formdata.append('dueAt',dueDate)
             if (props.edit) {
                 await axios.put(
@@ -134,18 +132,13 @@ const CreatePost = (props) => {
                 let due = new Date(props.dueAt.slice(0,10))
                 setDueDate(due.toISOString())
                 setShowduedate(due.toISOString().split('T')[0])
-                console.log(5,due)
             }
             if (props.description) {
                 setDetail(props.description)
             }
-            // if (props.file) {
-            //     setFiles(props.files)
-            // }
         }
     }, [session,token])
 
-    console.log(type);
     
     return (
         <div className=''>
@@ -211,7 +204,6 @@ const CreatePost = (props) => {
                             className={`md:flex items-end`}
                         >
                             {!type ? (
-                            // Due-Date
                             <div className='md:flex-col mb-[5px]'>
                                 <h2 className='text-[15px] font-bold text-[#545F71] mb-[5px]'>กำหนดส่ง</h2>
                                 <input

@@ -22,11 +22,6 @@ const SelectSubject = (props) => {
 
     const fetch = async () => {
         const allSubject = await axios.get(`${process.env.NEXT_PUBLIC_ENDPOINT}/subjects`,
-            // {
-            //     headers: {
-            //         Authorization: `Bearer ${token}`,
-            //     }
-            // },
         ).then((res) => res.data)
         setSubject([...allSubject])
     } 
@@ -39,10 +34,6 @@ const SelectSubject = (props) => {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        // if (session.status === "authenticated") {
-        //     setToken(session.data.accessToken)
-        //     fetchPost(session.data.accessToken)
-        // }
         fetch()
     }, [])
 

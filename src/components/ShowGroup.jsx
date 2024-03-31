@@ -8,7 +8,6 @@ const ShowGroup = ({groupData}) => {
   const [show, setShow] = useState(null);
   const [member, setMember] = useState();
   const showMember = async (groupId, index) => {
-    console.log(groupId);
     if (show != index + 1) {
       setShow(index + 1);
     } else {

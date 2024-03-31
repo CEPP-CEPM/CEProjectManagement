@@ -1,28 +1,31 @@
-'use client';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ShowGroup from '@/components/ShowGroup';
+"use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import ShowGroup from "@/components/ShowGroup";
 
-
-const GroupAdvisor = ({params}) =>{
-    const [data, setData] = useState();
+const GroupAdvisor = ({ params }) => {
+  const [data, setData] = useState();
 
   useEffect(() => {
     const fetch = async () => {
       const group = await axios
-        .get(`${process.env.NEXT_PUBLIC_ENDPOINT}/group/proctor/advisor/${params.id}`)
+        .get(
+          `${process.env.NEXT_PUBLIC_ENDPOINT}/group/proctor/advisor/${params.id}`
+        )
         .then((res) => res.data);
       setData(group);
     };
     fetch();
   }, []);
-  console.log(data);
 
-    return(
-        <div className='flex justify-center py-5'>
-            <ShowGroup groupData={data}/>
-        </div>
-    )
-}
+  return (
+    <div className="flex justify-center py-5">
+      <div>
+        <p className="text-[30px] mb-5 font-bold">Group</p>
+        <ShowGroup groupData={data} />
+      </div>
+    </div>
+  );
+};
 
-export default GroupAdvisor
+export default GroupAdvisor;

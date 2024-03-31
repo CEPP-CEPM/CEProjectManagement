@@ -35,7 +35,6 @@ export const handler = NextAuth({
           }
         );
         const user = await resUser.json() 
-        console.log(resToken)
         return { ...token, user, ...resToken };
       }
       return { ...token, ...user };
