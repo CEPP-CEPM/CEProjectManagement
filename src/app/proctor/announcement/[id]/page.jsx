@@ -42,7 +42,7 @@ const Announcement = ({ params }) => {
         if (result.isConfirmed) {
             axios.delete(`${process.env.NEXT_PUBLIC_ENDPOINT}/announcement/${params.id}`,{
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${session.data.accessToken}`,
                 },
             })
             .then((res) => {
