@@ -33,9 +33,15 @@ const AnnounceCard = (props) => {
                 },
             }).then((res) => res.data)
             if (props.type == 'Assignment') {
-                setAnnounceData([...assignment])
+                const data = [...assignment].sort((a, b) => {
+                    return (a.createAt < b.createAt) ? 1 : ((a.createAt > b.createAt) ? -1 : 0);
+                });
+                setAnnounceData(data)
             } else if (props.type == 'Announcement') {
-                setAnnounceData([...announce])
+                const data = [...announce].sort((a, b) => {
+                    return (a.createAt < b.createAt) ? 1 : ((a.createAt > b.createAt) ? -1 : 0);
+                });
+                setAnnounceData(data)
             } else {
                 const data = [...announce, ...assignment].sort((a, b) => {
                     return (a.createAt < b.createAt) ? 1 : ((a.createAt > b.createAt) ? -1 : 0);
